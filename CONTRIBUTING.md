@@ -102,7 +102,7 @@ npm install
 
 ```
 
-### Step 4a: Update angular.json
+### Step 5: Update angular.json
 
 Add the library configuration to your workspace's `angular.json` file under the `ngx-workspace`:
 
@@ -152,7 +152,7 @@ This configuration enables:
 - **Test**: Run unit tests with Karma
 - **Development & Production**: Separate TypeScript configurations for different build modes
 
-### Step 5: Link the Library
+### Step 6: Link the Library
 
 Link the library to your workspace for local development:
 
@@ -161,7 +161,7 @@ Link the library to your workspace for local development:
 npm link ./projects/ngx-datepicker-calendar
 ```
 
-### Step 6: Verify Setup
+### Step 7: Verify Setup
 
 Create a test component in your workspace to verify the setup:
 
@@ -233,27 +233,19 @@ Visit `http://localhost:4200` to verify the setup is working.
 ngx-datepicker-calendar/
 ├── src/
 │   ├── lib/
-│   │   ├── components/
-│   │   │   ├── ngx-date-picker.component.ts
-│   │   │   ├── ngx-date-picker.component.html
-│   │   │   ├── ngx-date-picker.component.css
-│   │   │   ├── ngx-calendar.component.ts
-│   │   │   ├── ngx-calendar.component.html
-│   │   │   ├── ngx-calendar.component.css
-│   │   │   └── ngx-date-picker-input/
-│   │   ├── services/
-│   │   │   └── ngx-datepicker-calendar.service.ts
+│   │   ├── ngx-date-picker.component.ts
+│   │   ├── ngx-date-picker.component.html
+│   │   ├── ngx-calendar.component.html
+│   │   ├── ngx-calendar.component.ts
+│   │   └── ngx-datepicker-calendar.service.ts
 │   │   ├── types/
 │   │   │   └── date-picker-calendar.types.ts
 │   │   ├── constants/
 │   │   │   └── date-picker.const.ts
 │   │   ├── theme/
-│   │   │   ├── date-picker-light.css
-│   │   │   ├── date-picker-dark.css
-│   │   │   ├── date-picker-input-light.css
-│   │   │   ├── date-picker-input-dark.css
-│   │   │   └── README.md
-│   │   └── ngx-datepicker-calendar.module.ts
+│   │   │   ├── calendar.css
+│   │   │   ├── date-picker.css
+│   │   │   ├── date-picker-calendar-dark.css
 │   └── public-api.ts
 ├── README.md
 ├── CONTRIBUTING.md
@@ -265,20 +257,6 @@ ngx-datepicker-calendar/
 ├── ng-package.json
 └── ...
 ```
-
-### Key Files
-
-- **`src/lib/components/ngx-date-picker.component.ts`** - Date picker input wrapper component
-- **`src/lib/components/ngx-calendar.component.ts`** - Main calendar component
-- **`src/lib/services/ngx-datepicker-calendar.service.ts`** - Shared service for date operations
-- **`src/lib/types/date-picker-calendar.types.ts`** - TypeScript type definitions
-- **`src/lib/constants/date-picker.const.ts`** - Application constants
-- **`src/lib/theme/`** - CSS theme files (light and dark modes)
-- **`src/public-api.ts`** - Public API exports
-- **`ng-package.json`** - ng-packagr configuration for library packaging
-- **`tsconfig.lib.json`** - TypeScript configuration for development builds
-- **`tsconfig.lib.prod.json`** - TypeScript configuration for production builds
-- **`tsconfig.spec.json`** - TypeScript configuration for unit tests
 
 ---
 

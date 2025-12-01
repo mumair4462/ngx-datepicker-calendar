@@ -141,25 +141,7 @@ export class AppComponent {
 
 ### 2. Add Styling
 
-Import the CSS files in your global `styles.scss` or `styles.css`:
-
-```scss
-@import 'ngx-datepicker-calendar/lib/theme/date-picker.css';
-@import 'ngx-datepicker-calendar/lib/theme/calendar.css';
-
-// Optional: Dark theme
-@import 'ngx-datepicker-calendar/lib/theme/date-picker-calendar-dark.css';
-```
-
-Or in your `styles.css`:
-
-```css
-@import 'ngx-datepicker-calendar/lib/theme/date-picker.css';
-@import 'ngx-datepicker-calendar/lib/theme/calendar.css';
-
-/* Optional: Dark theme */
-@import 'ngx-datepicker-calendar/lib/theme/date-picker-calendar-dark.css';
-```
+Goto: [Styling & Theming](#styling--theming)
 
 ### 3. Use in Your Application
 
@@ -236,11 +218,11 @@ The ngx-datepicker-calendar library includes pre-built CSS themes. Add them to y
 In your `src/styles.scss`:
 
 ```scss
-@import 'ngx-datepicker-calendar/lib/theme/date-picker.css';
-@import 'ngx-datepicker-calendar/lib/theme/calendar.css';
+@import '../node_modules/ngx-datepicker-calendar/lib/theme/date-picker.css';
+@import '../node_modules/ngx-datepicker-calendar/lib/theme/calendar.css';
 
 // Optional: Include dark theme
-@import 'ngx-datepicker-calendar/lib/theme/date-picker-calendar-dark.css';
+@import '../node_modules/ngx-datepicker-calendar/lib/theme/date-picker-calendar-dark.css';
 
 // Your custom variables and styles
 :root {
@@ -249,25 +231,7 @@ In your `src/styles.scss`:
 }
 ```
 
-#### Option 2: CSS
-
-In your `src/styles.css`:
-
-```css
-@import 'ngx-datepicker-calendar/lib/theme/date-picker.css';
-@import 'ngx-datepicker-calendar/lib/theme/calendar.css';
-
-/* Optional: Include dark theme */
-@import 'ngx-datepicker-calendar/lib/theme/date-picker-calendar-dark.css';
-
-/* Your custom variables and styles */
-:root {
-  --input-color-primary: #4a90e2;
-  --input-border-radius-md: 8px;
-}
-```
-
-#### Option 3: Angular CLI Configuration
+#### Option 2: Angular CLI Configuration
 
 In `angular.json`, add the CSS files to the `styles` array:
 
@@ -301,7 +265,7 @@ The library includes built-in dark mode support. To enable dark mode:
 The dark theme automatically activates based on the user's system preference:
 
 ```scss
-@import 'ngx-datepicker-calendar/lib/theme/date-picker-calendar-dark.css';
+@import '../node_modules/ngx-datepicker-calendar/lib/theme/date-picker-calendar-dark.css';
 
 @media (prefers-color-scheme: dark) {
   // Dark mode styles are automatically applied
@@ -324,7 +288,7 @@ export class ThemeService {
 Then in your CSS:
 
 ```css
-@import 'ngx-datepicker-calendar/lib/theme/date-picker-calendar-dark.css';
+@import '../node_modules/ngx-datepicker-calendar/lib/theme/date-picker-calendar-dark.css';
 
 :root.dark-mode {
   --input-color-background: #1e1e1e;
@@ -1296,15 +1260,6 @@ export class DateFormatComponent {
 }
 ```
 
-### Q: How do I handle timezone issues?
-
-**A:** Always normalize dates to midnight UTC:
-
-```typescript
-const date = new Date();
-date.setHours(0, 0, 0, 0);
-```
-
 ### Q: Can I use this with Reactive Forms?
 
 **A:** Yes! Both `NgxCalendarComponent` and `NgxDatePickerComponent` fully support Reactive Forms via `ControlValueAccessor`. You can use them with `formControl`, `formControlName`, and all form validation features.
@@ -1434,31 +1389,16 @@ export class DateFormComponent {
 ```
 
 ```typescript
-import { CalendarService } from './calendar.service';
+import { NgxDatePickerCalendarService } from 'ngx-datepicker-calendar';
 import { inject } from '@angular/core';
 
 export class MyComponent {
-  private calendarService = inject(CalendarService);
+  private ngxDatePickerCalendarService = inject(NgxDatePickerCalendarService);
 
   formatDate(date: Date): string {
-    return this.calendarService.formatDate(date, 'MM/DD/YYYY');
+    return this.ngxDatePickerCalendarService.formatDate(date, 'MM/DD/YYYY');
   }
 }
-```
-
-### Q: How do I support multiple languages?
-
-**A:** Use custom weekday names:
-
-```typescript
-weekdayNames = computed(() => {
-  const lang = this.language();
-  const names = {
-    en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-    es: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
-  };
-  return names[lang];
-});
 ```
 
 ### Q: Is the component mobile-friendly?
