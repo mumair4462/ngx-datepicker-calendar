@@ -145,20 +145,20 @@ Import the CSS files in your global `styles.scss` or `styles.css`:
 
 ```scss
 @import 'ngx-datepicker-calendar/lib/theme/date-picker.css';
-@import 'ngx-datepicker-calendar/lib/theme/date-picker-input.css';
+@import 'ngx-datepicker-calendar/lib/theme/calendar.css';
 
 // Optional: Dark theme
-@import 'ngx-datepicker-calendar/lib/theme/date-picker-dark.css';
+@import 'ngx-datepicker-calendar/lib/theme/date-picker-calendar-dark.css';
 ```
 
 Or in your `styles.css`:
 
 ```css
 @import 'ngx-datepicker-calendar/lib/theme/date-picker.css';
-@import 'ngx-datepicker-calendar/lib/theme/date-picker-input.css';
+@import 'ngx-datepicker-calendar/lib/theme/calendar.css';
 
 /* Optional: Dark theme */
-@import 'ngx-datepicker-calendar/lib/theme/date-picker-dark.css';
+@import 'ngx-datepicker-calendar/lib/theme/date-picker-calendar-dark.css';
 ```
 
 ### 3. Use in Your Application
@@ -237,10 +237,10 @@ In your `src/styles.scss`:
 
 ```scss
 @import 'ngx-datepicker-calendar/lib/theme/date-picker.css';
-@import 'ngx-datepicker-calendar/lib/theme/date-picker-input.css';
+@import 'ngx-datepicker-calendar/lib/theme/calendar.css';
 
 // Optional: Include dark theme
-@import 'ngx-datepicker-calendar/lib/theme/date-picker-dark.css';
+@import 'ngx-datepicker-calendar/lib/theme/date-picker-calendar-dark.css';
 
 // Your custom variables and styles
 :root {
@@ -255,10 +255,10 @@ In your `src/styles.css`:
 
 ```css
 @import 'ngx-datepicker-calendar/lib/theme/date-picker.css';
-@import 'ngx-datepicker-calendar/lib/theme/date-picker-input.css';
+@import 'ngx-datepicker-calendar/lib/theme/calendar.css';
 
 /* Optional: Include dark theme */
-@import 'ngx-datepicker-calendar/lib/theme/date-picker-dark.css';
+@import 'ngx-datepicker-calendar/lib/theme/date-picker-calendar-dark.css';
 
 /* Your custom variables and styles */
 :root {
@@ -281,8 +281,8 @@ In `angular.json`, add the CSS files to the `styles` array:
             "styles": [
               "src/styles.scss",
               "node_modules/ngx-datepicker-calendar/lib/theme/date-picker.css",
-              "node_modules/ngx-datepicker-calendar/lib/theme/date-picker-input.css",
-              "node_modules/ngx-datepicker-calendar/lib/theme/date-picker-dark.css"
+              "node_modules/ngx-datepicker-calendar/lib/theme/calendar.css",
+              "node_modules/ngx-datepicker-calendar/lib/theme/date-picker-calendar-dark.css"
             ]
           }
         }
@@ -301,7 +301,7 @@ The library includes built-in dark mode support. To enable dark mode:
 The dark theme automatically activates based on the user's system preference:
 
 ```scss
-@import 'ngx-datepicker-calendar/lib/theme/date-picker-dark.css';
+@import 'ngx-datepicker-calendar/lib/theme/date-picker-calendar-dark.css';
 
 @media (prefers-color-scheme: dark) {
   // Dark mode styles are automatically applied
@@ -324,7 +324,7 @@ export class ThemeService {
 Then in your CSS:
 
 ```css
-@import 'ngx-datepicker-calendar/lib/theme/date-picker-dark.css';
+@import 'ngx-datepicker-calendar/lib/theme/date-picker-calendar-dark.css';
 
 :root.dark-mode {
   --input-color-background: #1e1e1e;
