@@ -1,5 +1,5 @@
 {
-  "name": "ngx-date-picker",
+  "name": "ngx-datepicker-calendar",
   "description": "A fully-featured, accessible, and performant date picker component library built with Angular v18+ using signals and standalone components.",
   "version": "1.0.0",
   "peerDependencies": {
@@ -12,7 +12,7 @@
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mumair4462/ngx-date-picker.git"
+    "url": "git+https://github.com/mumair4462/ngx-datepicker-calendar.git"
   },
   "keywords": [
     "angular",
@@ -45,7 +45,7 @@
   "author": "Umair Saeed",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mumair4462/ngx-date-picker/issues"
+    "url": "https://github.com/mumair4462/ngx-datepicker-calendar/issues"
   },
-  "homepage": "https://github.com/mumair4462/ngx-date-picker#readme"
+  "homepage": "https://github.com/mumair4462/ngx-datepicker-calendar#readme"
 }
