@@ -13,9 +13,8 @@ Thank you for your interest in contributing to **ngx-date-picker**! We welcome c
 5. [Coding Standards](#coding-standards)
 6. [Commit Guidelines](#commit-guidelines)
 7. [Pull Request Process](#pull-request-process)
-8. [Testing](#testing)
-9. [Documentation](#documentation)
-10. [Code of Conduct](#code-of-conduct)
+8. [Documentation](#documentation)
+9. [Code of Conduct](#code-of-conduct)
 
 ---
 
@@ -122,13 +121,13 @@ ng generate component test-date-picker
 Update `src/app/test-date-picker/test-date-picker.component.ts`:
 
 ```typescript
-import { Component } from '@angular/core';
-import { NgxDatePickerInputComponent } from 'ngx-date-picker';
+import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
+import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
 
 @Component({
   selector: 'app-test-date-picker',
-  standalone: true,
   imports: [NgxDatePickerInputComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <h2>ngx-date-picker Test</h2>
     <ngx-date-picker-input
@@ -136,14 +135,16 @@ import { NgxDatePickerInputComponent } from 'ngx-date-picker';
       placeholder="Select a date"
       (dateSelected)="onDateSelected($event)"
     />
-    <p *ngIf="selectedDate">Selected: {{ selectedDate | date: 'fullDate' }}</p>
+    @if (selectedDate()) {
+      <p>Selected: {{ selectedDate() | date: 'fullDate' }}</p>
+    }
   `
 })
 export class TestDatePickerComponent {
-  selectedDate: Date | null = null;
+  selectedDate = signal<Date | null>(null);
 
-  onDateSelected(date: Date) {
-    this.selectedDate = date;
+  onDateSelected(date: Date): void {
+    this.selectedDate.set(date);
     console.log('Date selected:', date);
   }
 }
@@ -157,7 +158,6 @@ import { TestDatePickerComponent } from './test-date-picker/test-date-picker.com
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [TestDatePickerComponent],
   template: `
     <app-test-date-picker></app-test-date-picker>
@@ -303,9 +303,8 @@ import { Component, ChangeDetectionStrategy, signal, computed, inject } from '@a
 
 @Component({
   selector: 'app-date-picker',
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `...`
+  template: `<div>{{ formattedDate() }}</div>`
 })
 export class DatePickerComponent {
   private selectedDate = signal<Date | null>(null);
@@ -454,59 +453,6 @@ Describe how you tested your changes.
 - All CI checks must pass
 - No merge conflicts
 - Code coverage should not decrease
-
----
-
-## Testing
-
-### Running Tests
-
-```bash
-# Run all tests
-npm run test
-
-# Run tests in watch mode
-npm run test:watch
-
-# Run tests with coverage
-npm run test:coverage
-```
-
-### Writing Tests
-
-- Use **Jasmine** for unit tests
-- Use **Karma** as the test runner
-- Aim for at least **80% code coverage**
-- Test edge cases and error scenarios
-
-Example:
-
-```typescript
-describe('NgxDatePickerComponent', () => {
-  let component: NgxDatePickerComponent;
-  let fixture: ComponentFixture<NgxDatePickerComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [NgxDatePickerComponent]
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(NgxDatePickerComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should select a date', () => {
-    const testDate = new Date(2024, 0, 15);
-    component.selectDate(testDate);
-    expect(component.selectedDate).toEqual(testDate);
-  });
-});
-```
 
 ---
 

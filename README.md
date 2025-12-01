@@ -85,19 +85,19 @@ A fully-featured, accessible, and performant date picker component library built
 Install the package using npm:
 
 ```bash
-npm install ngx-date-picker
+npm install ngx-datepicker-calendar
 ```
 
 Or using yarn:
 
 ```bash
-yarn add ngx-date-picker
+yarn add ngx-datepicker-calendar
 ```
 
 Or using pnpm:
 
 ```bash
-pnpm add ngx-date-picker
+pnpm add ngx-datepicker-calendar
 ```
 
 ### Prerequisites
@@ -111,7 +111,7 @@ pnpm add ngx-date-picker
 After installation, verify the package is installed correctly:
 
 ```bash
-npm list ngx-date-picker
+npm list ngx-datepicker-calendar
 ```
 
 ---
@@ -124,7 +124,7 @@ In your component file, import the date picker component:
 
 ```typescript
 import { Component } from '@angular/core';
-import { NgxDatePickerInputComponent } from 'ngx-date-picker';
+import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
 
 @Component({
   selector: 'app-root',
@@ -150,28 +150,28 @@ export class AppComponent {
 Import the CSS files in your global `styles.scss` or `styles.css`:
 
 ```scss
-@import 'ngx-date-picker/lib/theme/date-picker.css';
-@import 'ngx-date-picker/lib/theme/date-picker-input.css';
+@import 'ngx-datepicker-calendar/lib/theme/date-picker.css';
+@import 'ngx-datepicker-calendar/lib/theme/date-picker-input.css';
 
 // Optional: Dark theme
-@import 'ngx-date-picker/lib/theme/date-picker-dark.css';
+@import 'ngx-datepicker-calendar/lib/theme/date-picker-dark.css';
 ```
 
 Or in your `styles.css`:
 
 ```css
-@import 'ngx-date-picker/lib/theme/date-picker.css';
-@import 'ngx-date-picker/lib/theme/date-picker-input.css';
+@import 'ngx-datepicker-calendar/lib/theme/date-picker.css';
+@import 'ngx-datepicker-calendar/lib/theme/date-picker-input.css';
 
 /* Optional: Dark theme */
-@import 'ngx-date-picker/lib/theme/date-picker-dark.css';
+@import 'ngx-datepicker-calendar/lib/theme/date-picker-dark.css';
 ```
 
 ### 3. Use in Your Application
 
 ```typescript
 import { Component, signal } from '@angular/core';
-import { NgxDatePickerInputComponent } from 'ngx-date-picker';
+import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
 
 @Component({
   selector: 'app-date-picker-example',
@@ -206,7 +206,7 @@ export class DatePickerExampleComponent {
 Both components are standalone and can be imported directly:
 
 ```typescript
-import { NgxDatePickerComponent, NgxDatePickerInputComponent } from 'ngx-date-picker';
+import { NgxDatePickerComponent, NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
 
 @Component({
   selector: 'app-root',
@@ -221,7 +221,7 @@ export class AppComponent {}
 
 ```typescript
 import { NgModule } from '@angular/core';
-import { NgxDatePickerComponent, NgxDatePickerInputComponent } from 'ngx-date-picker';
+import { NgxDatePickerComponent, NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
 
 @NgModule({
   imports: [NgxDatePickerComponent, NgxDatePickerInputComponent]
@@ -242,11 +242,11 @@ The ngx-date-picker library includes pre-built CSS themes. Add them to your glob
 In your `src/styles.scss`:
 
 ```scss
-@import 'ngx-date-picker/lib/theme/date-picker.css';
-@import 'ngx-date-picker/lib/theme/date-picker-input.css';
+@import 'ngx-datepicker-calendar/lib/theme/date-picker.css';
+@import 'ngx-datepicker-calendar/lib/theme/date-picker-input.css';
 
 // Optional: Include dark theme
-@import 'ngx-date-picker/lib/theme/date-picker-dark.css';
+@import 'ngx-datepicker-calendar/lib/theme/date-picker-dark.css';
 
 // Your custom variables and styles
 :root {
@@ -260,11 +260,11 @@ In your `src/styles.scss`:
 In your `src/styles.css`:
 
 ```css
-@import 'ngx-date-picker/lib/theme/date-picker.css';
-@import 'ngx-date-picker/lib/theme/date-picker-input.css';
+@import 'ngx-datepicker-calendar/lib/theme/date-picker.css';
+@import 'ngx-datepicker-calendar/lib/theme/date-picker-input.css';
 
 /* Optional: Include dark theme */
-@import 'ngx-date-picker/lib/theme/date-picker-dark.css';
+@import 'ngx-datepicker-calendar/lib/theme/date-picker-dark.css';
 
 /* Your custom variables and styles */
 :root {
@@ -464,7 +464,7 @@ A wrapper around the Calendar component that includes a text input field and pop
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { inject } from '@angular/core';
-import { NgxDatePickerInputComponent } from 'ngx-date-picker';
+import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
 
 @Component({
   selector: 'app-form',
@@ -924,7 +924,7 @@ export class MyComponent {
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { signal } from '@angular/core';
-import { NgxDatePickerInputComponent } from 'ngx-date-picker';
+import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
 
 @Component({
   selector: 'app-date-picker',
@@ -956,7 +956,7 @@ export class DatePickerComponent {
 import { Component, ChangeDetectionStrategy, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { signal } from '@angular/core';
-import { NgxDatePickerInputComponent } from 'ngx-date-picker';
+import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
 
 @Component({
   selector: 'app-range-picker',
@@ -1131,7 +1131,7 @@ export class ConstrainedDatesComponent {
 ```typescript
 import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgxDatePickerInputComponent } from 'ngx-date-picker';
+import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
 
 @Component({
   selector: 'app-date-format',
@@ -1319,7 +1319,7 @@ date.setHours(0, 0, 0, 0);
 ```typescript
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgxDatePickerInputComponent } from 'ngx-date-picker';
+import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
 
 @Component({
   selector: 'app-date-form',
