@@ -1,0 +1,254 @@
+/* ============================================================================
+   Dark Theme - Date Picker Component
+   ============================================================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-dark-background: #1e1e1e;
+    --color-dark-background-secondary: #2a2a2a;
+    --color-dark-background-tertiary: #1a1a1a;
+    --color-dark-text: #e0e0e0;
+    --color-dark-border: #333;
+    --color-dark-border-light: #444;
+    --color-dark-text-light: #999;
+    --color-dark-text-muted: #666;
+    --color-dark-text-very-muted: #555;
+    --color-dark-range-bg: #1a3a52;
+    --color-dark-warning-bg: #3a3a1a;
+    --color-dark-warning-border: #666633;
+    --color-dark-warning-text: #ffcc00;
+    --color-dark-warning-hover-bg: #4a4a2a;
+    --color-dark-warning-hover-border: #888844;
+    --color-dark-hover-light: #2a4a70;
+    --color-dark-clear-active: #d4e8f9;
+  }
+
+  .calendar-container {
+    background-color: var(--color-dark-background);
+    border-color: var(--color-dark-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .calendar-header h2 {
+    color: var(--color-dark-text);
+  }
+
+  .month-button,
+  .year-button {
+    color: var(--color-dark-text);
+  }
+
+  .month-button:hover,
+  .year-button:hover {
+    opacity: 0.8;
+  }
+
+  .selector-scroll-large::-webkit-scrollbar-thumb {
+    background: var(--color-dark-border);
+  }
+
+  .selector-scroll-large::-webkit-scrollbar-thumb:hover {
+    background: var(--color-dark-text-light);
+  }
+
+  .selector-button-large {
+    background-color: var(--color-dark-background-tertiary);
+    border-color: var(--color-dark-border);
+    color: var(--color-dark-text);
+  }
+
+  .selector-button-large:hover:not(.active) {
+    background-color: var(--color-dark-border);
+    border-color: var(--color-dark-text-light);
+  }
+
+  .selector-button-large.active {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    border-color: var(--color-primary);
+  }
+
+  .selector-label {
+    color: var(--color-dark-text-light);
+  }
+
+  .selector-button {
+    background-color: var(--color-dark-background-tertiary);
+    border-color: var(--color-dark-border);
+    color: var(--color-dark-text);
+  }
+
+  .selector-button:hover:not(.active) {
+    background-color: var(--color-dark-border);
+    border-color: var(--color-dark-text-light);
+  }
+
+  .selector-button.active {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    border-color: var(--color-primary);
+  }
+
+  .selector-scroll::-webkit-scrollbar-thumb {
+    background: var(--color-dark-border);
+  }
+
+  .selector-scroll::-webkit-scrollbar-thumb:hover {
+    background: var(--color-dark-text-light);
+  }
+
+  .nav-button {
+    background-color: var(--color-dark-background-secondary);
+    border-color: var(--color-dark-border-light);
+    color: var(--color-dark-text);
+  }
+
+  .nav-button:hover:not(:disabled) {
+    background-color: var(--color-dark-border);
+    border-color: var(--color-dark-text-light);
+  }
+
+  .weekday-name {
+    color: var(--color-dark-text);
+    background-color: var(--color-dark-background-secondary);
+    padding: var(--weekday-padding);
+    border-radius: var(--border-radius-sm);
+  }
+
+  .calendar-day {
+    color: var(--color-dark-text-light) !important;
+    background-color: var(--color-dark-background-tertiary);
+    border-color: var(--color-dark-border);
+  }
+
+  .calendar-day:not(.disabled):not(.selected):not(.range-start):not(.range-end):hover {
+    background-color: var(--color-dark-border);
+    border-color: var(--color-dark-text-light);
+  }
+
+  .calendar-day:not(.current-month) {
+    color: var(--color-dark-text-muted) !important;
+    background-color: var(--color-dark-background-secondary);
+    border-color: var(--color-dark-border);
+  }
+
+  .calendar-day.today {
+    border: 2px solid var(--color-primary);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+  }
+
+  .calendar-day.today:hover {
+    border-color: var(--color-primary-hover) !important;
+    color: var(--color-primary-hover) !important;
+  }
+
+  .calendar-day.today.selected {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    border-color: var(--color-primary);
+  }
+
+  .calendar-day.today.selected:hover {
+    background-color: var(--color-primary-hover) !important;
+    border-color: var(--color-primary-hover) !important;
+    color: var(--color-background) !important;
+  }
+
+  .calendar-day.selected {
+    background-color: var(--color-primary);
+    color: var(--color-background) !important;
+    border-color: var(--color-primary);
+  }
+
+  .calendar-day.selected:hover {
+    background-color: var(--color-primary-hover) !important;
+    border-color: var(--color-primary-hover) !important;
+    color: var(--color-background) !important;
+  }
+
+  .calendar-day.in-range {
+    background-color: var(--color-dark-range-bg);
+    border-color: var(--color-primary);
+    color: var(--color-dark-text);
+  }
+
+  .calendar-day.range-start,
+  .calendar-day.range-end {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    border-color: var(--color-primary);
+  }
+
+  .calendar-day.disabled {
+    background-color: var(--color-dark-background-secondary);
+    color: var(--color-dark-text-muted) !important;
+    border-color: var(--color-dark-border);
+    text-decoration: line-through;
+  }
+
+  .calendar-day.disabled:hover {
+    background-color: var(--color-dark-border);
+    border-color: var(--color-dark-text-light);
+  }
+
+  .action-button {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-background);
+  }
+
+  .action-button:hover:not(:disabled) {
+    background-color: var(--color-primary-hover);
+    border-color: var(--color-primary-active);
+  }
+
+  .action-button:active:not(:disabled) {
+    background-color: var(--color-primary-active);
+  }
+
+  .action-button.clear {
+    background-color: var(--color-dark-range-bg);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .action-button.clear:hover:not(:disabled) {
+    background-color: var(--color-dark-hover-light);
+    border-color: var(--color-primary-hover);
+  }
+}
+
+
+/* ============================================================================
+   Dark Theme - Date Picker Input Component
+   ============================================================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --input-color-dark-background: #1e1e1e;
+    --input-color-dark-background-secondary: #2a2a2a;
+    --input-color-dark-background-tertiary: #1a1a1a;
+    --input-color-dark-text: #e0e0e0;
+    --input-color-dark-border: #333;
+    --input-color-dark-border-light: #444;
+    --input-color-dark-text-light: #999;
+    --input-color-dark-text-muted: #666;
+    --input-color-dark-text-very-muted: #555;
+
+    /* Dark mode input overrides */
+    --calendar-input-background: var(--input-color-dark-background-secondary);
+    --calendar-input-border: 1px solid var(--input-color-dark-border-light);
+    --calendar-input-color: var(--input-color-dark-text);
+    --calendar-input-disabled-background: var(--input-color-dark-background-tertiary);
+    --calendar-input-disabled-color: var(--input-color-dark-text-muted);
+    --calendar-input-placeholder-color: var(--input-color-dark-text-light);
+
+    /* Dark mode popover overrides */
+    --popover-background: var(--input-color-dark-background);
+    --popover-border: 1px solid var(--input-color-dark-border);
+    --popover-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    --popover-arrow-color: var(--input-color-dark-border);
+    --popover-arrow-inner-color: var(--input-color-dark-background);
+  }
+}

@@ -1,0 +1,270 @@
+/* ============================================================================
+   Light Theme - Date Picker Input Component
+   ============================================================================ */
+
+:root {
+  /* Colors */
+  --input-color-primary: #4a90e2;
+  --input-color-primary-light: #e3f2fd;
+  --input-color-text-primary: #333;
+  --input-color-text-secondary: #666;
+  --input-color-text-light: #999;
+  --input-color-text-muted: #ccc;
+  --input-color-background: #ffffff;
+  --input-color-background-light: #f5f5f5;
+  --input-color-background-lighter: #fafafa;
+  --input-color-border: #e0e0e0;
+  --input-color-border-light: #ddd;
+  --input-color-shadow: rgba(0, 0, 0, 0.1);
+  --input-color-overlay: rgba(0, 0, 0, 0.5);
+
+  /* Spacing */
+  --input-spacing-xs: 4px;
+  --input-spacing-sm: 8px;
+  --input-spacing-md: 12px;
+  --input-spacing-lg: 16px;
+  --input-spacing-xl: 20px;
+  --input-spacing-2xl: 30px;
+
+  /* Padding */
+  --input-padding: 12px 16px;
+  --input-padding-button: 8px 12px;
+  --input-padding-container: 16px;
+
+  /* Border radius */
+  --input-border-radius-sm: 4px;
+  --input-border-radius-md: 8px;
+
+  /* Font sizes */
+  --input-font-size-xs: 11px;
+  --input-font-size-sm: 12px;
+  --input-font-size-base: 16px;
+  --input-font-size-md: 18px;
+  --input-font-size-lg: 20px;
+
+  /* Font weights */
+  --input-font-weight-normal: 500;
+  --input-font-weight-semibold: 600;
+  --input-font-weight-bold: 700;
+
+  /* Transitions */
+  --input-transition-default: all 0.2s ease;
+  --input-transition-none: none;
+
+  /* Z-index */
+  --input-z-index-overlay: 1000;
+  --input-z-index-popover: 1001;
+
+  /* Input Field Variables */
+  --calendar-input-height: 48px;
+  --calendar-input-min-width: 280px;
+  --calendar-input-padding: 12px 16px;
+  --calendar-input-border: 1px solid var(--input-color-border);
+  --calendar-input-border-radius: 8px;
+  --calendar-input-font-size: var(--input-font-size-base);
+  --calendar-input-color: var(--input-color-text-primary);
+  --calendar-input-background: var(--input-color-background);
+  --calendar-input-box-shadow: 0 2px 8px var(--input-color-shadow);
+  --calendar-input-focus-border-color: var(--input-color-primary);
+  --calendar-input-focus-shadow: 0 0 0 3px var(--input-color-primary-light);
+  --calendar-input-disabled-background: var(--input-color-background-light);
+  --calendar-input-disabled-color: var(--input-color-text-muted);
+  --calendar-input-disabled-opacity: 0.6;
+  --calendar-input-placeholder-color: var(--input-color-text-light);
+
+  /* Popover Variables */
+  --popover-background: var(--input-color-background);
+  --popover-border: 1px solid var(--input-color-border);
+  --popover-border-radius: 8px;
+  --popover-shadow: 0 2px 8px var(--input-color-shadow);
+  --popover-z-index: var(--input-z-index-popover);
+  --popover-offset-top: 12px;
+  --popover-arrow-size: 8px;
+  --popover-arrow-color: var(--input-color-border);
+  --popover-arrow-inner-color: var(--input-color-background);
+
+  /* Overlay Variables */
+  --overlay-background: transparent;
+  --overlay-z-index: var(--input-z-index-overlay);
+}
+
+/* ============================================================================
+   Component Styles
+   ============================================================================ */
+
+.calendar-input-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    sans-serif;
+}
+
+.input-group {
+  display: flex;
+  gap: var(--input-spacing-sm);
+  align-items: center;
+}
+
+.calendar-input {
+  flex: 1;
+  min-width: var(--calendar-input-min-width);
+  height: var(--calendar-input-height);
+  padding: var(--calendar-input-padding);
+  border: var(--calendar-input-border);
+  border-radius: var(--calendar-input-border-radius);
+  font-size: var(--calendar-input-font-size);
+  font-weight: var(--input-font-weight-normal);
+  color: var(--calendar-input-color);
+  background-color: var(--calendar-input-background);
+  box-shadow: var(--calendar-input-box-shadow);
+  cursor: pointer;
+  transition: var(--input-transition-default);
+  box-sizing: border-box;
+}
+
+.calendar-input:focus {
+  outline: none;
+  border-color: var(--calendar-input-focus-border-color);
+  box-shadow: var(--calendar-input-focus-shadow);
+}
+
+.calendar-input:disabled {
+  background-color: var(--calendar-input-disabled-background);
+  color: var(--calendar-input-disabled-color);
+  cursor: not-allowed;
+  opacity: var(--calendar-input-disabled-opacity);
+}
+
+.calendar-input::placeholder {
+  color: var(--calendar-input-placeholder-color);
+}
+
+.popover-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--overlay-background);
+  z-index: var(--overlay-z-index);
+  animation: none;
+}
+
+.popover-container {
+  position: absolute;
+  top: calc(100% + var(--popover-offset-top));
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--popover-background);
+  border: var(--popover-border);
+  border-radius: var(--popover-border-radius);
+  box-shadow: var(--popover-shadow);
+  z-index: var(--popover-z-index);
+}
+
+/* Caret arrow pointing up */
+.popover-container::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: var(--popover-arrow-size) solid transparent;
+  border-right: var(--popover-arrow-size) solid transparent;
+  border-bottom: var(--popover-arrow-size) solid var(--popover-arrow-color);
+}
+
+.popover-container::after {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 1px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: calc(var(--popover-arrow-size) - 1px) solid transparent;
+  border-right: calc(var(--popover-arrow-size) - 1px) solid transparent;
+  border-bottom: calc(var(--popover-arrow-size) - 1px) solid var(--popover-arrow-inner-color);
+}
+
+/* ============================================================================
+   Animations
+   ============================================================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================================
+   Accessibility
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .calendar-input,
+  .popover-overlay,
+  .popover-container {
+    transition: var(--input-transition-none);
+    animation: none;
+  }
+}
+
+/* ============================================================================
+   Responsive Design
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .calendar-input {
+    font-size: var(--input-font-size-md);
+    padding: 10px 14px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .calendar-input {
+    padding: 10px 12px;
+    font-size: var(--input-font-size-base);
+    height: 40px;
+    min-width: 200px;
+  }
+
+  .popover-container {
+    position: absolute;
+    top: calc(100% + var(--popover-offset-top));
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: 90vw;
+    max-height: none;
+    overflow-y: visible;
+  }
+}
+
+/* ============================================================================
+   High Contrast Mode Support
+   ============================================================================ */
+
+@media (prefers-contrast: more) {
+  .calendar-input {
+    border-width: 2px;
+  }
+}

@@ -1,0 +1,31 @@
+<div class="calendar-input-wrapper">
+    <div class="input-group">
+        <input #inputElement type="text" class="calendar-input" [value]="displayValue()" (focus)="openPopover()"
+            [placeholder]="placeholder()" [disabled]="disabled()" readonly aria-label="Select date" />
+    </div>
+
+    @if (isOpen()) {
+    <div class="popover-overlay" (click)="closePopover()"></div>
+    <div class="popover-container">
+        <ngx-date-picker 
+            [selectionMode]="selectionMode()" 
+            [disabledDates]="disabledDates()" 
+            [minDate]="minDate()"
+            [maxDate]="maxDate()" 
+            [showOtherMonthDays]="showOtherMonthDays()" 
+            [highlightToday]="highlightToday()"
+            [allowPastDates]="allowPastDates()" 
+            [allowFutureDates]="allowFutureDates()"
+            [disableWeekends]="disableWeekends()"
+            [customWeekdayNames]="customWeekdayNames()"
+            [preSelectedDate]="selectedDate()"
+            [preSelectedDates]="selectedDates()"
+            [preSelectedRange]="selectedRange()"
+            (dateSelected)="onDateSelected($event)"
+            (datesSelected)="onDatesSelected($event)" 
+            (dateRangeSelected)="onDateRangeSelected($event)"
+            (clearSelection)="clearSelection()"
+            (click)="$event.stopPropagation()" />
+    </div>
+    }
+</div>
