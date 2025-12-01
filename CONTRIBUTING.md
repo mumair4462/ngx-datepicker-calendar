@@ -10,6 +10,7 @@ Thank you for your interest in contributing to **ngx-datepicker-calendar**! We w
 2. [Local Development Setup](#local-development-setup)
 3. [Project Structure](#project-structure)
 4. [Development Workflow](#development-workflow)
+4. [Date Picker Calendar Demo Component](#date-picker-demo-component)
 5. [Coding Standards](#coding-standards)
 6. [Commit Guidelines](#commit-guidelines)
 7. [Pull Request Process](#pull-request-process)
@@ -336,6 +337,877 @@ Push your branch and create a pull request:
 
 ```bash
 git push origin feature/your-feature-name
+```
+
+---
+
+## Date Picker Demo Component
+
+```typescript
+import { CommonModule } from '@angular/common';
+import { Component, ChangeDetectionStrategy, signal, computed, inject } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+// import { NgxDatePickerComponent, NgxCalendarComponent } from '../../projects/ngx-datepicker-calendar/dist/ngx-date-picker-calendar';
+import { NgxDatePickerComponent, NgxCalendarComponent } from '../../projects/ngx-datepicker-calendar/src/public-api';
+
+@Component({
+  selector: 'ngx-date-picker-demo',
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule, NgxDatePickerComponent, NgxCalendarComponent],
+  template: `
+    <div class="demo-container">
+      <h1>Calendar Component Demo</h1>
+
+      <div class="demo-grid">
+        <!-- Calendar Input - Single Selection -->
+        <div class="demo-section">
+          <h2>Calendar Input - Single Date</h2>
+          <ngx-date-picker
+            selectionMode="single"
+            placeholder="Pick a date"
+            (dateSelected)="selectedInputSingleDate.set($event)"
+          />
+          @if (selectedInputSingleDate()) {
+            <p class="result">Selected: {{ formatDate(selectedInputSingleDate()!) }}</p>
+          }
+        </div>
+
+        <!-- Calendar Input - Multiple Selection -->
+        <div class="demo-section">
+          <h2>Calendar Input - Multiple Dates</h2>
+          <ngx-date-picker
+            selectionMode="multiple"
+            placeholder="Select multiple dates"
+            [highlightToday]="true"
+            (datesSelected)="selectedInputMultipleDates.set($event)"
+          />
+          @if (selectedInputMultipleDates().length > 0) {
+            <p class="result">Selected {{ selectedInputMultipleDates().length }} dates:</p>
+            <ul class="date-list">
+              @for (date of selectedInputMultipleDates(); track date.getTime()) {
+                <li>{{ formatDate(date) }}</li>
+              }
+            </ul>
+          }
+        </div>
+
+        <!-- Calendar Input - Range Selection -->
+        <div class="demo-section">
+          <h2>Calendar Input - Date Range</h2>
+          <ngx-date-picker
+            selectionMode="range"
+            placeholder="Select date range"
+            [highlightToday]="true"
+            (dateRangeSelected)="selectedInputRange.set($event)"
+          />
+          @if (selectedInputRange()) {
+            <p class="result">
+              Range: {{ formatDate(selectedInputRange()!.start) }} to
+              {{ formatDate(selectedInputRange()!.end) }}
+            </p>
+          }
+        </div>
+
+        <!-- Calendar Input - With Disabled Dates -->
+        <div class="demo-section">
+          <h2>Calendar Input - Disabled Dates</h2>
+          <ngx-date-picker
+            selectionMode="single"
+            placeholder="Pick a date"
+            [disabledDates]="disabledDates()"
+            [highlightToday]="true"
+            (dateSelected)="selectedInputDisabledDate.set($event)"
+          />
+          @if (selectedInputDisabledDate()) {
+            <p class="result">Selected: {{ formatDate(selectedInputDisabledDate()!) }}</p>
+          }
+        </div>
+
+        <!-- Single Selection -->
+        <div class="demo-section">
+          <h2>Single Date Selection</h2>
+          <ngx-calendar
+            selectionMode="single"
+            (dateSelected)="onSingleDateSelected($event)"
+            
+          />
+          @if (selectedSingleDate()) {
+            <p class="result">Selected: {{ formatDate(selectedSingleDate()!) }}</p>
+          }
+        </div>
+
+        <!-- Multiple Selection -->
+        <div class="demo-section">
+          <h2>Multiple Dates Selection</h2>
+          <ngx-calendar
+            selectionMode="multiple"
+            (datesSelected)="onMultipleDatesSelected($event)"
+            [highlightToday]="true"
+          />
+          @if (selectedMultipleDates().length > 0) {
+            <p class="result">Selected {{ selectedMultipleDates().length }} dates:</p>
+            <ul class="date-list">
+              @for (date of selectedMultipleDates(); track date.getTime()) {
+                <li>{{ formatDate(date) }}</li>
+              }
+            </ul>
+          }
+        </div>
+
+        <!-- Range Selection -->
+        <div class="demo-section">
+          <h2>Date Range Selection</h2>
+          <ngx-calendar
+            selectionMode="range"
+            (dateRangeSelected)="onDateRangeSelected($event)"
+            [highlightToday]="true"
+          />
+          @if (selectedRange()) {
+            <p class="result">
+              Range: {{ formatDate(selectedRange()!.start) }} to
+              {{ formatDate(selectedRange()!.end) }}
+            </p>
+          }
+        </div>
+
+        <!-- With Disabled Dates -->
+        <div class="demo-section">
+          <h2>With Disabled Dates</h2>
+          <ngx-calendar
+            selectionMode="single"
+            [disabledDates]="disabledDates()"
+            (dateSelected)="onDisabledDateSelected($event)"
+            [highlightToday]="true"
+          />
+          @if (selectedDisabledDate()) {
+            <p class="result">Selected: {{ formatDate(selectedDisabledDate()!) }}</p>
+          }
+        </div>
+
+        <!-- With Min/Max Dates -->
+        <div class="demo-section">
+          <h2>With Min/Max Date Range</h2>
+          <ngx-calendar
+            selectionMode="single"
+            [minDate]="minDate()"
+            [maxDate]="maxDate()"
+            (dateSelected)="onMinMaxDateSelected($event)"
+            [highlightToday]="true"
+          />
+          @if (selectedMinMaxDate()) {
+            <p class="result">Selected: {{ formatDate(selectedMinMaxDate()!) }}</p>
+          }
+        </div>
+
+        <!-- No Past Dates -->
+        <div class="demo-section">
+          <h2>No Past Dates Allowed</h2>
+          <ngx-calendar
+            selectionMode="single"
+            [allowPastDates]="false"
+            (dateSelected)="onNoPastDateSelected($event)"
+            [highlightToday]="true"
+          />
+          @if (selectedNoPastDate()) {
+            <p class="result">Selected: {{ formatDate(selectedNoPastDate()!) }}</p>
+          }
+        </div>
+
+        <!-- Disable Weekends (Boolean) -->
+        <div class="demo-section">
+          <h2>Disable Both Weekends (true)</h2>
+          <p class="hint">Disables Saturday & Sunday</p>
+          <ngx-calendar
+            selectionMode="single"
+            [disableWeekends]="true"
+            (dateSelected)="onWeekendDisabledDateSelected($event)"
+            [highlightToday]="true"
+            [showOtherMonthDays]="false"
+          />
+          @if (selectedWeekendDisabledDate()) {
+            <p class="result">Selected: {{ formatDate(selectedWeekendDisabledDate()!) }}</p>
+          }
+        </div>
+
+        <!-- Disable Only Sunday -->
+        <div class="demo-section">
+          <h2>Disable Only Sunday (1)</h2>
+          <p class="hint">Disables only Sunday</p>
+          <ngx-calendar
+            selectionMode="single"
+            [disableWeekends]="1"
+            (dateSelected)="onDisableSundayDateSelected($event)"
+            [highlightToday]="true"
+          />
+          @if (selectedDisableSundayDate()) {
+            <p class="result">Selected: {{ formatDate(selectedDisableSundayDate()!) }}</p>
+          }
+        </div>
+
+        <!-- Disable Saturday & Sunday -->
+        <div class="demo-section">
+          <h2>Disable Sat & Sun (2)</h2>
+          <p class="hint">Disables Saturday & Sunday</p>
+          <ngx-calendar
+            selectionMode="single"
+            [disableWeekends]="2"
+            (dateSelected)="onDisableSatSunDateSelected($event)"
+            [highlightToday]="true"
+          />
+          @if (selectedDisableSatSunDate()) {
+            <p class="result">Selected: {{ formatDate(selectedDisableSatSunDate()!) }}</p>
+          }
+        </div>
+
+        <!-- Disable Custom Days Array [0, 3] -->
+        <div class="demo-section">
+          <h2>Disable Custom Days [0, 3]</h2>
+          <p class="hint">Disables Sunday (0) & Wednesday (3)</p>
+          <ngx-calendar
+            selectionMode="single"
+            [disableWeekends]="[0, 3]"
+            (dateSelected)="onDisableCustomDateSelected($event)"
+            [highlightToday]="true"
+          />
+          @if (selectedDisableCustomDate()) {
+            <p class="result">Selected: {{ formatDate(selectedDisableCustomDate()!) }}</p>
+          }
+        </div>
+
+        <!-- Hide Other Month Days -->
+        <div class="demo-section">
+          <h2>Hide Other Month Days</h2>
+          <ngx-calendar
+            selectionMode="single"
+            [showOtherMonthDays]="false"
+            (dateSelected)="onHideOtherMonthDateSelected($event)"
+            [highlightToday]="true"
+          />
+          @if (selectedHideOtherMonthDate()) {
+            <p class="result">Selected: {{ formatDate(selectedHideOtherMonthDate()!) }}</p>
+          }
+        </div>
+
+        <!-- Custom Weekday Names (Short) -->
+        <div class="demo-section">
+          <h2>Custom Weekday Names (Short)</h2>
+          <p class="hint">Using: S, M, T, W, T, F, S</p>
+          <ngx-calendar
+            selectionMode="single"
+            [customWeekdayNames]="['S', 'M', 'T', 'W', 'T', 'F', 'S']"
+            (dateSelected)="onCustomWeekdayDateSelected($event)"
+            [highlightToday]="true"
+          />
+          @if (selectedCustomWeekdayDate()) {
+            <p class="result">Selected: {{ formatDate(selectedCustomWeekdayDate()!) }}</p>
+          }
+        </div>
+
+        <!-- Custom Weekday Names (Single Letter) -->
+        <div class="demo-section">
+          <h2>Custom Weekday Names (Single Letter)</h2>
+          <p class="hint">Using: Su, Mo, Tu, We, Th, Fr, Sa</p>
+          <ngx-calendar
+            selectionMode="single"
+            [customWeekdayNames]="['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']"
+            (dateSelected)="onCustomWeekday2DateSelected($event)"
+            [highlightToday]="true"
+          />
+          @if (selectedCustomWeekday2Date()) {
+            <p class="result">Selected: {{ formatDate(selectedCustomWeekday2Date()!) }}</p>
+          }
+        </div>
+
+        <!-- Custom Weekday Names with Calendar Input -->
+        <div class="demo-section">
+          <h2>Calendar Input - Custom Weekdays</h2>
+          <p class="hint">Using: D, L, M, M, J, V, S</p>
+          <ngx-date-picker
+            selectionMode="single"
+            placeholder="Pick a date"
+            [customWeekdayNames]="['D', 'L', 'M', 'M', 'J', 'V', 'S']"
+            [highlightToday]="true"
+            (dateSelected)="selectedInputCustomWeekdayDate.set($event)"
+          />
+          @if (selectedInputCustomWeekdayDate()) {
+            <p class="result">Selected: {{ formatDate(selectedInputCustomWeekdayDate()!) }}</p>
+          }
+        </div>
+
+        <!-- Date Format - Short -->
+        <div class="demo-section">
+          <h2>Date Format - Short</h2>
+          <p class="hint">Format: 12/25/24</p>
+          <ngx-date-picker
+            selectionMode="single"
+            placeholder="Pick a date"
+            dateFormat="short"
+            [highlightToday]="true"
+            (dateSelected)="selectedFormatShortDate.set($event)"
+          />
+          @if (selectedFormatShortDate()) {
+            <p class="result">Selected: {{ selectedFormatShortDate() | date: 'short' }}</p>
+          }
+        </div>
+
+        <!-- Date Format - Medium (Default) -->
+        <div class="demo-section">
+          <h2>Date Format - Medium (Default)</h2>
+          <p class="hint">Format: Dec 25, 2024</p>
+          <ngx-date-picker
+            selectionMode="single"
+            placeholder="Pick a date"
+            dateFormat="medium"
+            [highlightToday]="true"
+            (dateSelected)="selectedFormatMediumDate.set($event)"
+          />
+          @if (selectedFormatMediumDate()) {
+            <p class="result">Selected: {{ selectedFormatMediumDate() | date: 'medium' }}</p>
+          }
+        </div>
+
+        <!-- Date Format - Long -->
+        <div class="demo-section">
+          <h2>Date Format - Long</h2>
+          <p class="hint">Format: December 25, 2024</p>
+          <ngx-date-picker
+            selectionMode="single"
+            placeholder="Pick a date"
+            dateFormat="long"
+            [highlightToday]="true"
+            (dateSelected)="selectedFormatLongDate.set($event)"
+          />
+          @if (selectedFormatLongDate()) {
+            <p class="result">Selected: {{ selectedFormatLongDate() | date: 'long' }}</p>
+          }
+        </div>
+
+        <!-- Date Format - Full -->
+        <div class="demo-section">
+          <h2>Date Format - Full</h2>
+          <p class="hint">Format: Monday, December 25, 2024</p>
+          <ngx-date-picker
+            selectionMode="single"
+            placeholder="Pick a date"
+            dateFormat="full"
+            [highlightToday]="true"
+            (dateSelected)="selectedFormatFullDate.set($event)"
+          />
+          @if (selectedFormatFullDate()) {
+            <p class="result">Selected: {{ selectedFormatFullDate() | date: 'full' }}</p>
+          }
+        </div>
+
+        <!-- Date Format - Custom (MM/DD/YYYY) -->
+        <div class="demo-section">
+          <h2>Date Format - Custom (MM/DD/YYYY)</h2>
+          <p class="hint">Custom format: numeric month, day, year</p>
+          <ngx-date-picker
+            selectionMode="single"
+            placeholder="Pick a date"
+            [customDateFormatOptions]="customFormatMMDDYYYY()"
+            [highlightToday]="true"
+            (dateSelected)="selectedFormatCustomDate.set($event)"
+          />
+          @if (selectedFormatCustomDate()) {
+            <p class="result">Selected: {{ selectedFormatCustomDate() | date: 'MM/dd/yyyy' }}</p>
+          }
+        </div>
+
+        <!-- Date Format - Custom (Full with Time) -->
+        <div class="demo-section">
+          <h2>Date Format - Custom (With Weekday)</h2>
+          <p class="hint">Custom format: weekday, month, day, year</p>
+          <ngx-date-picker
+            selectionMode="single"
+            placeholder="Pick a date"
+            [customDateFormatOptions]="customFormatWithWeekday()"
+            [highlightToday]="true"
+            (dateSelected)="selectedFormatWeekdayDate.set($event)"
+          />
+          @if (selectedFormatWeekdayDate()) {
+            <p class="result">Selected: {{ selectedFormatWeekdayDate() | date: 'EEEE, MMMM d, y' }}</p>
+          }
+        </div>
+
+        <!-- Reactive Forms - Calendar Input Example -->
+        <div class="demo-section">
+          <h2>Reactive Forms - Calendar Input</h2>
+          <p class="hint">Form validation with required validator</p>
+          <form [formGroup]="dateForm">
+            <ngx-date-picker
+              formControlName="singleDate"
+              selectionMode="single"
+              placeholder="Pick a date (required)"
+              [highlightToday]="true"
+            />
+            @if (dateForm.get('singleDate')?.hasError('required') && dateForm.get('singleDate')?.touched) {
+              <p class="error">Date is required</p>
+            }
+            <p class="form-status">
+              Status: 
+              <span [class.valid]="dateForm.get('singleDate')?.valid" [class.invalid]="dateForm.get('singleDate')?.invalid">
+                {{ dateForm.get('singleDate')?.valid ? '✓ Valid' : '✗ Invalid' }}
+              </span>
+            </p>
+          </form>
+        </div>
+
+        <!-- Reactive Forms - Calendar Input Multiple -->
+        <div class="demo-section">
+          <h2>Reactive Forms - Multiple Dates</h2>
+          <p class="hint">Form with multiple date selection</p>
+          <form [formGroup]="dateForm">
+            <ngx-date-picker
+              formControlName="multipleDates"
+              selectionMode="multiple"
+              placeholder="Select multiple dates"
+              [highlightToday]="true"
+            />
+            @if (multipleDatesCount() > 0) {
+              <p class="result">Selected {{ multipleDatesCount() }} dates</p>
+            }
+          </form>
+        </div>
+
+        <!-- Reactive Forms - Calendar Input Range -->
+        <div class="demo-section">
+          <h2>Reactive Forms - Date Range</h2>
+          <p class="hint">Form with date range selection</p>
+          <form [formGroup]="dateForm">
+            <ngx-date-picker
+              formControlName="dateRange"
+              selectionMode="range"
+              placeholder="Select date range"
+              [highlightToday]="true"
+            />
+            @if (dateRangeValue()) {
+              <p class="result">
+                Range: {{ dateRangeValue()!.start | date: 'short' }} 
+                to 
+                {{ dateRangeValue()!.end | date: 'short' }}
+              </p>
+            }
+          </form>
+        </div>
+
+        <!-- Reactive Forms - Calendar Component -->
+        <div class="demo-section">
+          <h2>Reactive Forms - Calendar Component</h2>
+          <p class="hint">Direct calendar with form control</p>
+          <form [formGroup]="dateForm">
+            <ngx-calendar
+              formControlName="calendarDate"
+              selectionMode="single"
+              [highlightToday]="true"
+            />
+            <p class="form-status">
+              Touched: <strong>{{ dateForm.get('calendarDate')?.touched ? 'Yes' : 'No' }}</strong>
+            </p>
+          </form>
+        </div>
+
+        <!-- Reactive Forms - Complete Form Example -->
+        <div class="demo-section">
+          <h2>Reactive Forms - Complete Example</h2>
+          <p class="hint">Full form with validation and submission</p>
+          <form [formGroup]="completeForm" (ngSubmit)="onFormSubmit()">
+            <div class="form-group">
+              <label for="event-date">Event Date (Required):</label>
+              <ngx-date-picker
+                id="event-date"
+                formControlName="eventDate"
+                selectionMode="single"
+                placeholder="Pick event date"
+                [highlightToday]="true"
+              />
+              @if (completeForm.get('eventDate')?.hasError('required') && completeForm.get('eventDate')?.touched) {
+                <p class="error">Event date is required</p>
+              }
+            </div>
+
+            <div class="form-group">
+              <label for="available-dates">Available Dates:</label>
+              <ngx-date-picker
+                id="available-dates"
+                formControlName="availableDates"
+                selectionMode="multiple"
+                placeholder="Select available dates"
+                [highlightToday]="true"
+              />
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" [disabled]="completeForm.invalid">Submit</button>
+              <button type="button" (click)="onFormReset()">Reset</button>
+            </div>
+
+            @if (formSubmitted()) {
+              <div class="form-result">
+                <h4>Form Data:</h4>
+                <pre>{{ completeForm.value | json }}</pre>
+              </div>
+            }
+          </form>
+        </div>
+      </div>
+    </div>
+  `,
+  styles: `
+    .demo-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 40px;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 30px;
+    }
+
+    .demo-section {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .demo-section h2 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .hint {
+      margin: 0 0 16px 0;
+      font-size: 12px;
+      color: #999;
+      font-style: italic;
+    }
+
+    .result {
+      margin-top: 16px;
+      padding: 12px;
+      background-color: #e3f2fd;
+      border-left: 4px solid #4a90e2;
+      color: #1565c0;
+      font-weight: 500;
+      border-radius: 4px;
+    }
+
+    .date-list {
+      margin: 12px 0;
+      padding-left: 20px;
+      background-color: #e3f2fd;
+      border-left: 4px solid #4a90e2;
+      border-radius: 4px;
+      padding: 12px 12px 12px 30px;
+    }
+
+    .date-list li {
+      color: #1565c0;
+      margin: 4px 0;
+    }
+
+    .custom-directive-input {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 16px;
+      font-weight: 500;
+      border-radius: 4px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .custom-directive-input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .custom-directive-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .form-status {
+      margin-top: 12px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .form-status span {
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .form-status span.valid {
+      color: #28a745;
+      background-color: #d4edda;
+    }
+
+    .form-status span.invalid {
+      color: #dc3545;
+      background-color: #f8d7da;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .form-actions button {
+      flex: 1;
+      padding: 10px 16px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: #f5f5f5;
+      color: #333;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .form-actions button:hover:not(:disabled) {
+      background-color: #e8e8e8;
+      border-color: #999;
+    }
+
+    .form-actions button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .form-result {
+      margin-top: 16px;
+      padding: 12px;
+      background-color: #f0f0f0;
+      border-radius: 4px;
+      border-left: 4px solid #4a90e2;
+    }
+
+    .form-result h4 {
+      margin: 0 0 8px 0;
+      color: #333;
+    }
+
+    .form-result pre {
+      margin: 0;
+      overflow-x: auto;
+      background-color: #fff;
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .error {
+      color: #dc3545;
+      font-size: 13px;
+      margin-top: 8px;
+      padding: 8px;
+      background-color: #f8d7da;
+      border-radius: 4px;
+      border-left: 3px solid #dc3545;
+    }
+
+    @media (max-width: 768px) {
+      .demo-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DatePIckerDemoComponent {
+  private fb = inject(FormBuilder);
+
+  // Reactive Forms
+  dateForm = this.fb.group({
+    singleDate: [undefined],
+    multipleDates: [[]],
+    dateRange: [undefined],
+    calendarDate: [undefined],
+  });
+
+  completeForm = this.fb.group({
+    eventDate: [undefined, Validators.required],
+    availableDates: [[]],
+  });
+
+  formSubmitted = signal(false);
+
+  // Computed values for template
+  multipleDatesCount = computed(() => {
+    const dates = this.dateForm.get('multipleDates')?.value as Date[] | undefined;
+    return Array.isArray(dates) ? dates.length : 0;
+  });
+
+  dateRangeValue = computed(() => {
+    return this.dateForm.get('dateRange')?.value as { start: Date; end: Date } | undefined;
+  });
+
+  selectedSingleDate = signal<Date | undefined>(undefined);
+  selectedMultipleDates = signal<Date[]>([]);
+  selectedRange = signal<{ start: Date; end: Date } | undefined>(undefined);
+  selectedDisabledDate = signal<Date | undefined>(undefined);
+  selectedMinMaxDate = signal<Date | undefined>(undefined);
+  selectedNoPastDate = signal<Date | undefined>(undefined);
+  selectedWeekendDisabledDate = signal<Date | undefined>(undefined);
+  selectedDisableSundayDate = signal<Date | undefined>(undefined);
+  selectedDisableSatSunDate = signal<Date | undefined>(undefined);
+  selectedDisableCustomDate = signal<Date | undefined>(undefined);
+  selectedHideOtherMonthDate = signal<Date | undefined>(undefined);
+
+  // Calendar Input selections
+  selectedInputSingleDate = signal<Date | undefined>(undefined);
+  selectedInputMultipleDates = signal<Date[]>([]);
+  selectedInputRange = signal<{ start: Date; end: Date } | undefined>(undefined);
+  selectedInputDisabledDate = signal<Date | undefined>(undefined);
+
+  // Custom Weekday selections
+  selectedCustomWeekdayDate = signal<Date | undefined>(undefined);
+  selectedCustomWeekday2Date = signal<Date | undefined>(undefined);
+  selectedInputCustomWeekdayDate = signal<Date | undefined>(undefined);
+
+  // Date Format selections
+  selectedFormatShortDate = signal<Date | undefined>(undefined);
+  selectedFormatMediumDate = signal<Date | undefined>(undefined);
+  selectedFormatLongDate = signal<Date | undefined>(undefined);
+  selectedFormatFullDate = signal<Date | undefined>(undefined);
+  selectedFormatCustomDate = signal<Date | undefined>(undefined);
+  selectedFormatWeekdayDate = signal<Date | undefined>(undefined);
+
+  // Disabled dates: next 5 days
+  disabledDates = computed<Date[]>(() => {
+    const dates: Date[] = [];
+    const today = new Date();
+    for (let i = 1; i <= 5; i++) {
+      const date = new Date(today);
+      date.setDate(date.getDate() + i);
+      dates.push(date);
+    }
+    return dates;
+  });
+
+  // Min date: today
+  minDate = signal<Date>(new Date());
+
+  // Max date: 30 days from now
+  maxDate = computed<Date>(() => {
+    const date = new Date();
+    date.setDate(date.getDate() + 30);
+    return date;
+  });
+
+  onSingleDateSelected(date: Date): void {
+    this.selectedSingleDate.set(date);
+  }
+
+  onMultipleDatesSelected(dates: Date[]): void {
+    this.selectedMultipleDates.set(dates);
+  }
+
+  onDateRangeSelected(range: { start: Date; end: Date }): void {
+    this.selectedRange.set(range);
+  }
+
+  onDisabledDateSelected(date: Date): void {
+    this.selectedDisabledDate.set(date);
+  }
+
+  onMinMaxDateSelected(date: Date): void {
+    this.selectedMinMaxDate.set(date);
+  }
+
+  onNoPastDateSelected(date: Date): void {
+    this.selectedNoPastDate.set(date);
+  }
+
+  onWeekendDisabledDateSelected(date: Date): void {
+    this.selectedWeekendDisabledDate.set(date);
+  }
+
+  onDisableSundayDateSelected(date: Date): void {
+    this.selectedDisableSundayDate.set(date);
+  }
+
+  onDisableSatSunDateSelected(date: Date): void {
+    this.selectedDisableSatSunDate.set(date);
+  }
+
+  onDisableCustomDateSelected(date: Date): void {
+    this.selectedDisableCustomDate.set(date);
+  }
+
+  onHideOtherMonthDateSelected(date: Date): void {
+    this.selectedHideOtherMonthDate.set(date);
+  }
+
+  onCustomWeekdayDateSelected(date: Date): void {
+    this.selectedCustomWeekdayDate.set(date);
+  }
+
+  onCustomWeekday2DateSelected(date: Date): void {
+    this.selectedCustomWeekday2Date.set(date);
+  }
+
+  customFormatMMDDYYYY = signal({
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  } as Intl.DateTimeFormatOptions);
+
+  customFormatWithWeekday = signal({
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  } as Intl.DateTimeFormatOptions);
+
+  formatDate(date: Date): string {
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    };
+    return date.toLocaleDateString('en-US', options);
+  }
+
+  onFormSubmit(): void {
+    if (this.completeForm.valid) {
+      this.formSubmitted.set(true);
+      console.log('Form submitted with data:', this.completeForm.value);
+    }
+  }
+
+  onFormReset(): void {
+    this.completeForm.reset();
+    this.formSubmitted.set(false);
+  }
+}
 ```
 
 ---
