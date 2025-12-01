@@ -336,8 +336,8 @@ Then in your CSS:
 ### Theme Files Included
 
 - **`date-picker.css`** - Main calendar component styles
-- **`date-picker-input.css`** - Input field and popover styles
-- **`date-picker-dark.css`** - Dark mode theme overrides
+- **`calendar.css`** - Input field and popover styles
+- **`date-picker-calendar-dark.css`** - Dark mode theme overrides
 
 ---
 

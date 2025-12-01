@@ -47,5 +47,12 @@
   "bugs": {
     "url": "https://github.com/mumair4462/ngx-datepicker-calendar/issues"
   },
-  "homepage": "https://github.com/mumair4462/ngx-datepicker-calendar#readme"
+  "homepage": "https://github.com/mumair4462/ngx-datepicker-calendar#readme",
+  "exports": {
+    ".": {
+      "import": "./dist/ngx-date-picker-calendar/index.js",
+      "require": "./dist/ngx-date-picker-calendar/index.cjs"
+    },
+    "./lib/theme/*": "./dist/ngx-date-picker-calendar/lib/theme/*"
+  }
 }
