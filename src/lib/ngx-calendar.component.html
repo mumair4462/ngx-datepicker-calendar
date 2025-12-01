@@ -1,0 +1,120 @@
+<div class="calendar-container">
+    <!-- Header -->
+    <div class="calendar-header">
+        @if(preMonthBtnIcon() || preMonthTextBtn()){
+        <button class="nav-button" (click)="previousMonth()" aria-label="Previous month" type="button">
+            @if(preMonthBtnIcon()) {
+            <span [innerHTML]="previousIcon()" class="icon-span"></span>
+            }
+            @if(preMonthTextBtn()) {
+            {{preMonthTextBtn()}}
+            }
+        </button>
+        }@else {
+        <div class="nav-empty-btn"></div>
+        }
+
+        <div class="month-year">
+            <!-- Month Button -->
+            <button class="month-button" [class.active-date-button]="showMonthSelector()"
+                (click)="toggleMonthSelector()" type="button" [attr.aria-expanded]="showMonthSelector()"
+                aria-label="Select month">
+                <span>{{ monthName() }}</span>
+            </button>
+
+            <!-- Year Button -->
+            <button class="year-button" [class.active-date-button]="showYearSelector()" (click)="toggleYearSelector()"
+                type="button" [attr.aria-expanded]="showYearSelector()" aria-label="Select year">
+                <span>{{ currentYear() }}</span>
+            </button>
+        </div>
+
+        @if(nextMonthBtnIcon() || nextMonthBtnText()){
+        <button class="nav-button" (click)="nextMonth()" aria-label="Next month" type="button">
+            @if(nextMonthBtnText()) {
+            {{nextMonthBtnText()}}
+            }
+            @if(nextMonthBtnIcon()) {
+            <span [innerHTML]="nextIcon()" class="icon-span"></span>
+            }
+        </button>
+        }@else {
+        <div class="nav-empty-btn"></div>
+        }
+    </div>
+
+    <!-- Month Selector View -->
+    @if (showMonthSelector()) {
+    <div class="selector-view">
+        <div class="selector-section">
+            <label class="selector-label">Select Month</label>
+            <div class="selector-grid-large">
+                @for (month of monthNames(); track $index) {
+                <button class="selector-button-large" [class.active]="$index === currentMonth()"
+                    (click)="selectMonth($index)" type="button" [attr.aria-pressed]="$index === currentMonth()">
+                    {{ month.substring(0, 3) }}
+                </button>
+                }
+            </div>
+        </div>
+    </div>
+    } @else if (showYearSelector()) {
+    <!-- Year Selector View -->
+    <div class="selector-view">
+        <div class="selector-section">
+            <label class="selector-label">Select Year</label>
+            <div class="selector-grid-large">
+                @for (year of yearRange(); track year) {
+                <button class="selector-button-large" [class.active]="year === currentYear()" (click)="selectYear(year)"
+                    type="button" [attr.aria-pressed]="year === currentYear()">
+                    {{ year }}
+                </button>
+                }
+            </div>
+        </div>
+    </div>
+    } @else {
+    <!-- Weekday Headers -->
+    <div class="weekday-header">
+        @for (day of weekdayNames(); track day) {
+        <div class="weekday-name">{{ day }}</div>
+        }
+    </div>
+
+    <!-- Calendar Days -->
+    <div class="calendar-grid">
+        @for (day of displayedDays(); track day.date.getTime()) {
+        <button type="button" [class]="getDayClass(day)" (click)="onDayClick(day)"
+            [disabled]="day.isDisabled || !day.isCurrentMonth" [attr.aria-label]="
+            day.day +
+            ' ' +
+            monthName() +
+            ' ' +
+            day.year +
+            (day.isDisabled ? ' (disabled)' : '') +
+            (day.isSelected ? ' (selected)' : '')
+          " [attr.aria-pressed]="day.isSelected">
+            @if (!shouldHideDayNumber(day)) {
+            <span class="day-number">{{ day.day }}</span>
+            }
+        </button>
+        }
+    </div>
+    }
+
+    <!-- Action Buttons -->
+    @if (showClearBtn() || showTodayBtn()) {
+    <div class="calendar-actions">
+        @if (showTodayBtn()) {
+        <button class="action-button" (click)="goToToday()" type="button" aria-label="Go to today">
+            Today
+        </button>
+        }
+        @if (showClearBtn()) {
+        <button class="action-button clear" (click)="onClearSelection()" type="button" aria-label="Clear selection">
+            Clear
+        </button>
+        }
+    </div>
+    }
+</div>

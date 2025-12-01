@@ -1,6 +1,6 @@
-# ngx-date-picker - Complete Documentation
+# ngx-datepicker-calendar - Complete Documentation
 
-A fully-featured, accessible, and performant date picker component library built with Angular v18+ using signals and standalone components. Includes both a standalone `NgxDatePickerComponent` and a wrapped `NgxDatePickerInputComponent` for easy integration.
+A fully-featured, accessible, and performant date picker component library built with Angular v18+ using signals and standalone components. Includes both a standalone `NgxCalendarComponent` and a wrapped `NgxDatePickerComponent` for easy integration.
 
 ---
 
@@ -72,9 +72,9 @@ A fully-featured, accessible, and performant date picker component library built
 
 ### Supported Versions
 
-| ngx-date-picker | Angular Version |
-|-----------------|-----------------|
-| **1.x.x**       | **18.x.x**      |
+| ngx-datepicker-calendar | Angular Version |
+|-------------------------|-----------------|
+| **1.x.x**               | **18.x.x**      |
 
 ---
 
@@ -100,12 +100,6 @@ Or using pnpm:
 pnpm add ngx-datepicker-calendar
 ```
 
-### Prerequisites
-
-- **Angular**: v18.0.0 or higher
-- **Node.js**: v18.0.0 or higher
-- **TypeScript**: v5.2.0 or higher
-
 ### Verify Installation
 
 After installation, verify the package is installed correctly:
@@ -124,14 +118,14 @@ In your component file, import the date picker component:
 
 ```typescript
 import { Component } from '@angular/core';
-import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
+import { NgxDatePickerComponent } from 'ngx-datepicker-calendar';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [NgxDatePickerInputComponent],
+  imports: [NgxDatePickerComponent],
   template: `
-    <ngx-date-picker-input
+    <ngx-date-picker
       selectionMode="single"
       placeholder="Select a date"
       (dateSelected)="onDateSelected($event)"
@@ -171,16 +165,16 @@ Or in your `styles.css`:
 
 ```typescript
 import { Component, signal } from '@angular/core';
-import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
+import { NgxDatePickerComponent } from 'ngx-datepicker-calendar';
 
 @Component({
   selector: 'app-date-picker-example',
   standalone: true,
-  imports: [NgxDatePickerInputComponent],
+  imports: [NgxDatePickerComponent],
   template: `
     <div>
       <label for="date-input">Select a Date:</label>
-      <ngx-date-picker-input
+      <ngx-date-picker
         id="date-input"
         selectionMode="single"
         placeholder="Pick a date"
@@ -206,12 +200,12 @@ export class DatePickerExampleComponent {
 Both components are standalone and can be imported directly:
 
 ```typescript
-import { NgxDatePickerComponent, NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
+import { NgxCalendarComponent, NgxDatePickerComponent } from 'ngx-datepicker-calendar';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [NgxDatePickerComponent, NgxDatePickerInputComponent],
+  imports: [NgxCalendarComponent, NgxDatePickerComponent],
   template: `...`
 })
 export class AppComponent {}
@@ -221,10 +215,10 @@ export class AppComponent {}
 
 ```typescript
 import { NgModule } from '@angular/core';
-import { NgxDatePickerComponent, NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
+import { NgxCalendarComponent, NgxDatePickerComponent } from 'ngx-datepicker-calendar';
 
 @NgModule({
-  imports: [NgxDatePickerComponent, NgxDatePickerInputComponent]
+  imports: [NgxCalendarComponent, NgxDatePickerComponent]
 })
 export class DatePickerModule {}
 ```
@@ -235,7 +229,7 @@ export class DatePickerModule {}
 
 ### Global Styling Setup
 
-The ngx-date-picker library includes pre-built CSS themes. Add them to your global styles file:
+The ngx-datepicker-calendar library includes pre-built CSS themes. Add them to your global styles file:
 
 #### Option 1: SCSS (Recommended)
 
@@ -286,9 +280,9 @@ In `angular.json`, add the CSS files to the `styles` array:
           "options": {
             "styles": [
               "src/styles.scss",
-              "node_modules/ngx-date-picker/lib/theme/date-picker.css",
-              "node_modules/ngx-date-picker/lib/theme/date-picker-input.css",
-              "node_modules/ngx-date-picker/lib/theme/date-picker-dark.css"
+              "node_modules/ngx-datepicker-calendar/lib/theme/date-picker.css",
+              "node_modules/ngx-datepicker-calendar/lib/theme/date-picker-input.css",
+              "node_modules/ngx-datepicker-calendar/lib/theme/date-picker-dark.css"
             ]
           }
         }
@@ -307,7 +301,7 @@ The library includes built-in dark mode support. To enable dark mode:
 The dark theme automatically activates based on the user's system preference:
 
 ```scss
-@import 'ngx-date-picker/lib/theme/date-picker-dark.css';
+@import 'ngx-datepicker-calendar/lib/theme/date-picker-dark.css';
 
 @media (prefers-color-scheme: dark) {
   // Dark mode styles are automatically applied
@@ -330,7 +324,7 @@ export class ThemeService {
 Then in your CSS:
 
 ```css
-@import 'ngx-date-picker/lib/theme/date-picker-dark.css';
+@import 'ngx-datepicker-calendar/lib/theme/date-picker-dark.css';
 
 :root.dark-mode {
   --input-color-background: #1e1e1e;
@@ -354,7 +348,7 @@ The core calendar component that displays the calendar grid and handles date sel
 ### Basic Usage
 
 ```html
-<ngx-date-picker
+<ngx-calendar
   selectionMode="single"
   (dateSelected)="onDateSelected($event)"
 />
@@ -366,12 +360,12 @@ The core calendar component that displays the calendar grid and handles date sel
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { signal } from '@angular/core';
-import { NgxDatePickerComponent } from 'ngx-date-picker';
+import { NgxCalendarComponent } from 'ngx-datepicker-calendar';
 
 @Component({
   selector: 'app-example',
   template: `
-    <ngx-date-picker
+    <ngx-calendar
       selectionMode="single"
       (dateSelected)="onDateSelected($event)"
     />
@@ -379,7 +373,7 @@ import { NgxDatePickerComponent } from 'ngx-date-picker';
       <p>Selected: {{ selectedDate() | date }}</p>
     }
   `,
-  imports: [NgxDatePickerComponent, CommonModule],
+  imports: [NgxCalendarComponent, CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExampleComponent {
@@ -394,7 +388,7 @@ export class ExampleComponent {
 ### Multiple Dates Selection
 
 ```html
-<ngx-date-picker
+<ngx-calendar
   selectionMode="multiple"
   (datesSelected)="onDatesSelected($event)"
 />
@@ -409,7 +403,7 @@ onDatesSelected(dates: Date[]): void {
 ### Date Range Selection
 
 ```html
-<ngx-date-picker
+<ngx-calendar
   selectionMode="range"
   (dateRangeSelected)="onDateRangeSelected($event)"
 />
@@ -430,7 +424,7 @@ A wrapper around the Calendar component that includes a text input field and pop
 ### Basic Usage
 
 ```html
-<ngx-date-picker-input
+<ngx-date-picker
   selectionMode="single"
   placeholder="Select a date"
   (dateSelected)="onDateSelected($event)"
@@ -440,7 +434,7 @@ A wrapper around the Calendar component that includes a text input field and pop
 ### With Multiple Selection
 
 ```html
-<ngx-date-picker-input
+<ngx-date-picker
   selectionMode="multiple"
   placeholder="Select dates"
   [dateSeparator]="' | '"
@@ -451,7 +445,7 @@ A wrapper around the Calendar component that includes a text input field and pop
 ### With Date Range
 
 ```html
-<ngx-date-picker-input
+<ngx-date-picker
   selectionMode="range"
   placeholder="Select date range"
   (dateRangeSelected)="onDateRangeSelected($event)"
@@ -464,13 +458,13 @@ A wrapper around the Calendar component that includes a text input field and pop
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { inject } from '@angular/core';
-import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
+import { NgxDatePickerComponent } from 'ngx-datepicker-calendar';
 
 @Component({
   selector: 'app-form',
   template: `
     <form [formGroup]="form">
-      <ngx-date-picker-input
+      <ngx-date-picker
         formControlName="dateRange"
         selectionMode="range"
         placeholder="Select date range"
@@ -478,7 +472,7 @@ import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
       <button (click)="submit()">Submit</button>
     </form>
   `,
-  imports: [NgxDatePickerInputComponent, ReactiveFormsModule],
+  imports: [NgxDatePickerComponent, ReactiveFormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormComponent {
@@ -885,9 +879,10 @@ export class MyComponent {
 
 ```html
 <label for="date-input">Select Date:</label>
-<ngx-date-picker-input
+<ngx-date-picker
   id="date-input"
   selectionMode="single"
+  placeholder="Pick a date"
   (dateSelected)="onDateSelected($event)"
 />
 ```
@@ -924,12 +919,12 @@ export class MyComponent {
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { signal } from '@angular/core';
-import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
+import { NgxDatePickerComponent } from 'ngx-datepicker-calendar';
 
 @Component({
   selector: 'app-date-picker',
   template: `
-    <ngx-date-picker-input
+    <ngx-date-picker
       selectionMode="single"
       placeholder="Pick a date"
       (dateSelected)="onDateSelected($event)"
@@ -938,7 +933,7 @@ import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
       <p>You selected: {{ selectedDate() | date: 'fullDate' }}</p>
     }
   `,
-  imports: [NgxDatePickerInputComponent, CommonModule],
+  imports: [NgxDatePickerComponent, CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DatePickerComponent {
@@ -956,12 +951,12 @@ export class DatePickerComponent {
 import { Component, ChangeDetectionStrategy, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { signal } from '@angular/core';
-import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
+import { NgxDatePickerComponent } from 'ngx-datepicker-calendar';
 
 @Component({
   selector: 'app-range-picker',
   template: `
-    <ngx-date-picker-input
+    <ngx-date-picker
       selectionMode="range"
       placeholder="Select date range"
       (dateRangeSelected)="onRangeSelected($event)"
@@ -974,7 +969,7 @@ import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
       </div>
     }
   `,
-  imports: [NgxDatePickerInputComponent, CommonModule],
+  imports: [NgxDatePickerComponent, CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RangePickerComponent {
@@ -1001,18 +996,18 @@ export class RangePickerComponent {
 
 ```typescript
 import { Component, ChangeDetectionStrategy, computed } from '@angular/core';
-import { NgxDatePickerComponent } from 'ngx-date-picker';
+import { NgxCalendarComponent } from 'ngx-datepicker-calendar';
 
 @Component({
   selector: 'app-disabled-dates',
   template: `
-    <ngx-date-picker
+    <ngx-calendar
       selectionMode="single"
       [disabledDates]="disabledDates()"
       (dateSelected)="onDateSelected($event)"
     />
   `,
-  imports: [NgxDatePickerComponent],
+  imports: [NgxCalendarComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DisabledDatesComponent {
@@ -1044,7 +1039,7 @@ export class DisabledDatesComponent {
 ```typescript
 import { Component, ChangeDetectionStrategy, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgxDatePickerComponent } from 'ngx-date-picker';
+import { NgxCalendarComponent } from 'ngx-datepicker-calendar';
 
 type Language = 'en' | 'es' | 'fr';
 
@@ -1056,13 +1051,13 @@ type Language = 'en' | 'es' | 'fr';
       <button (click)="setLanguage('es')">Spanish</button>
       <button (click)="setLanguage('fr')">French</button>
     </div>
-    <ngx-date-picker
+    <ngx-calendar
       selectionMode="single"
       [customWeekdayNames]="weekdayNames()"
       (dateSelected)="onDateSelected($event)"
     />
   `,
-  imports: [NgxDatePickerComponent, CommonModule],
+  imports: [NgxCalendarComponent, CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CustomWeekdaysComponent {
@@ -1092,19 +1087,19 @@ export class CustomWeekdaysComponent {
 
 ```typescript
 import { Component, ChangeDetectionStrategy, signal, computed } from '@angular/core';
-import { NgxDatePickerComponent } from 'ngx-date-picker';
+import { NgxCalendarComponent } from 'ngx-datepicker-calendar';
 
 @Component({
   selector: 'app-constrained-dates',
   template: `
-    <ngx-date-picker
+    <ngx-calendar
       selectionMode="single"
       [minDate]="minDate()"
       [maxDate]="maxDate()"
       (dateSelected)="onDateSelected($event)"
     />
   `,
-  imports: [NgxDatePickerComponent],
+  imports: [NgxCalendarComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConstrainedDatesComponent {
@@ -1131,7 +1126,7 @@ export class ConstrainedDatesComponent {
 ```typescript
 import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
+import { NgxDatePickerComponent } from 'ngx-datepicker-calendar';
 
 @Component({
   selector: 'app-date-format',
@@ -1140,7 +1135,7 @@ import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
       <h3>Predefined Formats</h3>
       <div>
         <label>Short Format (12/25/24):</label>
-        <ngx-date-picker-input
+        <ngx-date-picker
           dateFormat="short"
           placeholder="Pick a date"
           (dateSelected)="onDateSelected($event)"
@@ -1152,7 +1147,7 @@ import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
 
       <div>
         <label>Medium Format (Dec 25, 2024):</label>
-        <ngx-date-picker-input
+        <ngx-date-picker
           dateFormat="medium"
           placeholder="Pick a date"
           (dateSelected)="onDateSelected($event)"
@@ -1164,7 +1159,7 @@ import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
 
       <div>
         <label>Long Format (December 25, 2024):</label>
-        <ngx-date-picker-input
+        <ngx-date-picker
           dateFormat="long"
           placeholder="Pick a date"
           (dateSelected)="onDateSelected($event)"
@@ -1176,7 +1171,7 @@ import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
 
       <div>
         <label>Full Format (Monday, December 25, 2024):</label>
-        <ngx-date-picker-input
+        <ngx-date-picker
           dateFormat="full"
           placeholder="Pick a date"
           (dateSelected)="onDateSelected($event)"
@@ -1189,7 +1184,7 @@ import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
       <h3>Custom Format</h3>
       <div>
         <label>Custom Format (MM/DD/YYYY):</label>
-        <ngx-date-picker-input
+        <ngx-date-picker
           [customDateFormatOptions]="customFormat()"
           placeholder="Pick a date"
           (dateSelected)="onDateSelected($event)"
@@ -1200,7 +1195,7 @@ import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
       </div>
     </div>
   `,
-  imports: [NgxDatePickerInputComponent, CommonModule],
+  imports: [NgxDatePickerComponent, CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DateFormatComponent {
@@ -1267,16 +1262,16 @@ export class DateFormatComponent {
 
 ```html
 <!-- Disable both Saturday and Sunday -->
-<ngx-date-picker [disableWeekends]="true" />
+<ngx-calendar [disableWeekends]="true" />
 
 <!-- Disable only Sunday -->
-<ngx-date-picker [disableWeekends]="1" />
+<ngx-calendar [disableWeekends]="1" />
 
 <!-- Disable Saturday and Sunday -->
-<ngx-date-picker [disableWeekends]="2" />
+<ngx-calendar [disableWeekends]="2" />
 
 <!-- Disable custom days (e.g., Sunday and Wednesday) -->
-<ngx-date-picker [disableWeekends]="[0, 3]" />
+<ngx-calendar [disableWeekends]="[0, 3]" />
 ```
 
 ### Q: How do I set a default selected date?
@@ -1284,9 +1279,9 @@ export class DateFormatComponent {
 **A:** Use the `preSelectedDate`, `preSelectedDates`, or `preSelectedRange` inputs:
 
 ```html
-<ngx-date-picker [preSelectedDate]="today" />
-<ngx-date-picker [preSelectedDates]="[date1, date2]" />
-<ngx-date-picker [preSelectedRange]="{ start: date1, end: date2 }" />
+<ngx-calendar [preSelectedDate]="today" />
+<ngx-calendar [preSelectedDates]="[date1, date2]" />
+<ngx-calendar [preSelectedRange]="{ start: date1, end: date2 }" />
 ```
 
 ### Q: How do I customize the styling?
@@ -1312,21 +1307,21 @@ date.setHours(0, 0, 0, 0);
 
 ### Q: Can I use this with Reactive Forms?
 
-**A:** Yes! Both `NgxDatePickerComponent` and `NgxDatePickerInputComponent` fully support Reactive Forms via `ControlValueAccessor`. You can use them with `formControl`, `formControlName`, and all form validation features.
+**A:** Yes! Both `NgxCalendarComponent` and `NgxDatePickerComponent` fully support Reactive Forms via `ControlValueAccessor`. You can use them with `formControl`, `formControlName`, and all form validation features.
 
-**With NgxDatePickerInputComponent (Recommended):**
+**With NgxDatePickerComponent (Recommended):**
 
 ```typescript
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
+import { NgxDatePickerComponent } from 'ngx-datepicker-calendar';
 
 @Component({
   selector: 'app-date-form',
   template: `
     <form [formGroup]="form">
       <label for="date">Select Date:</label>
-      <ngx-date-picker-input
+      <ngx-date-picker
         id="date"
         formControlName="selectedDate"
         selectionMode="single"
@@ -1338,7 +1333,7 @@ import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
       <button [disabled]="form.invalid">Submit</button>
     </form>
   `,
-  imports: [ReactiveFormsModule, NgxDatePickerInputComponent],
+  imports: [ReactiveFormsModule, NgxDatePickerComponent],
 })
 export class DateFormComponent {
   private fb = inject(FormBuilder);
@@ -1355,11 +1350,11 @@ export class DateFormComponent {
 }
 ```
 
-**With NgxDatePickerComponent (Direct):**
+**With NgxCalendarComponent (Direct):**
 
 ```html
 <form [formGroup]="form">
-  <ngx-date-picker
+  <ngx-calendar
     formControlName="dateField"
     selectionMode="single"
   />
@@ -1381,13 +1376,13 @@ export class DateFormComponent {
 
 ```html
 <!-- Predefined formats -->
-<ngx-date-picker-input dateFormat="short" />
-<ngx-date-picker-input dateFormat="medium" />
-<ngx-date-picker-input dateFormat="long" />
-<ngx-date-picker-input dateFormat="full" />
+<ngx-date-picker dateFormat="short" />
+<ngx-date-picker dateFormat="medium" />
+<ngx-date-picker dateFormat="long" />
+<ngx-date-picker dateFormat="full" />
 
 <!-- Custom format - MM/DD/YYYY -->
-<ngx-date-picker-input
+<ngx-date-picker
   [customDateFormatOptions]="{ 
     year: 'numeric', 
     month: '2-digit', 
@@ -1396,7 +1391,7 @@ export class DateFormComponent {
 />
 
 <!-- Custom format - Full with weekday -->
-<ngx-date-picker-input
+<ngx-date-picker
   [customDateFormatOptions]="{ 
     weekday: 'long', 
     year: 'numeric', 
@@ -1406,7 +1401,7 @@ export class DateFormComponent {
 />
 
 <!-- Custom format - Abbreviated -->
-<ngx-date-picker-input
+<ngx-date-picker
   [customDateFormatOptions]="{ 
     year: '2-digit', 
     month: 'short', 
@@ -1425,11 +1420,11 @@ export class DateFormComponent {
 
 ### Q: How do I get the selected date in a specific format?
 
-**A:** Use the `dateFormat` input on NgxDatePickerInputComponent or use Angular's date pipe:
+**A:** Use the `dateFormat` input on NgxDatePickerComponent or use Angular's date pipe:
 
 ```html
-<!-- Using NgxDatePickerInputComponent with format -->
-<ngx-date-picker-input
+<!-- Using NgxDatePickerComponent with format -->
+<ngx-date-picker
   dateFormat="long"
   (dateSelected)="onDateSelected($event)"
 />
@@ -1475,7 +1470,7 @@ weekdayNames = computed(() => {
 **A:** Yes! Use the button text and icon inputs:
 
 ```html
-<ngx-date-picker
+<ngx-calendar
   [preMonthTextBtn]="'← Previous'"
   [nextMonthBtnText]="'Next →'"
 />

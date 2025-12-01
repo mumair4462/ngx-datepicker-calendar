@@ -4,7 +4,7 @@ import { CalendarDay } from '../public-api';
 @Injectable({
   providedIn: 'root',
 })
-export class DatePickerService {
+export class NgxDatePickerCalendarService {
   private readonly MONTHS = [
     'January',
     'February',

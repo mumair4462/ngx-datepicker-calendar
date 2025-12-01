@@ -1,6 +1,6 @@
-# Contributing to ngx-date-picker
+# Contributing to ngx-datepicker-calendar
 
-Thank you for your interest in contributing to **ngx-date-picker**! We welcome contributions from the community. This guide will help you get started with setting up the project locally and understanding our contribution standards.
+Thank you for your interest in contributing to **ngx-datepicker-calendar**! We welcome contributions from the community. This guide will help you get started with setting up the project locally and understanding our contribution standards.
 
 ---
 
@@ -45,7 +45,7 @@ git --version       # Should be latest
 
 ### Step 1: Create an Angular Workspace
 
-First, create a new Angular workspace to work with ngx-date-picker:
+First, create a new Angular workspace to work with ngx-datepicker-calendar:
 
 ```bash
 ng new ngx-workspace
@@ -67,11 +67,11 @@ cd projects
 
 ### Step 3: Clone the Repository
 
-Clone the ngx-date-picker repository into the projects folder:
+Clone the ngx-datepicker-calendar repository into the projects folder:
 
 ```bash
-git clone https://github.com/mumair4462/ngx-date-picker.git
-cd ngx-date-picker
+git clone https://github.com/mumair4462/ngx-datepicker-calendar.git
+cd ngx-datepicker-calendar
 ```
 
 Your directory structure should now look like:
@@ -79,7 +79,7 @@ Your directory structure should now look like:
 ```
 ngx-workspace/
 ├── projects/
-│   └── ngx-date-picker/
+│   └── ngx-datepicker-calendar/
 │       ├── src/
 │       ├── README.md
 │       ├── package.json
@@ -101,13 +101,63 @@ npm install
 
 ```
 
+### Step 4a: Update angular.json
+
+Add the library configuration to your workspace's `angular.json` file under the `ngx-workspace`:
+
+```json
+{
+  "projects": {
+    ....
+    "ngx-datepicker-calendar": {
+      "projectType": "library",
+      "root": "projects/ngx-datepicker-calendar",
+      "sourceRoot": "projects/ngx-datepicker-calendar/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-datepicker-calendar/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-datepicker-calendar/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-datepicker-calendar/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/ngx-datepicker-calendar/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+This configuration enables:
+- **Build**: Compile the library using ng-packagr
+- **Test**: Run unit tests with Karma
+- **Development & Production**: Separate TypeScript configurations for different build modes
+
 ### Step 5: Link the Library
 
 Link the library to your workspace for local development:
 
 ```bash
 # From ngx-workspace root
-npm link ./projects/ngx-date-picker
+npm link ./projects/ngx-datepicker-calendar
 ```
 
 ### Step 6: Verify Setup
@@ -122,15 +172,15 @@ Update `src/app/test-date-picker/test-date-picker.component.ts`:
 
 ```typescript
 import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
-import { NgxDatePickerInputComponent } from 'ngx-datepicker-calendar';
+import { NgxDatePickerComponent } from 'ngx-datepicker-calendar';
 
 @Component({
   selector: 'app-test-date-picker',
-  imports: [NgxDatePickerInputComponent],
+  imports: [NgxDatePickerComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <h2>ngx-date-picker Test</h2>
-    <ngx-date-picker-input
+    <h2>ngx-datepicker-calendar Test</h2>
+    <ngx-date-picker
       selectionMode="single"
       placeholder="Select a date"
       (dateSelected)="onDateSelected($event)"
@@ -179,34 +229,55 @@ Visit `http://localhost:4200` to verify the setup is working.
 ## Project Structure
 
 ```
-ngx-date-picker/
+ngx-datepicker-calendar/
 ├── src/
 │   ├── lib/
-│   │   ├── ngx-date-picker.component.ts
-│   │   ├── ngx-date-picker-input.component.ts
-│   │   ├── ngx-date-picker.service.ts
+│   │   ├── components/
+│   │   │   ├── ngx-date-picker.component.ts
+│   │   │   ├── ngx-date-picker.component.html
+│   │   │   ├── ngx-date-picker.component.css
+│   │   │   ├── ngx-calendar.component.ts
+│   │   │   ├── ngx-calendar.component.html
+│   │   │   ├── ngx-calendar.component.css
+│   │   │   └── ngx-date-picker-input/
+│   │   ├── services/
+│   │   │   └── ngx-datepicker-calendar.service.ts
+│   │   ├── types/
+│   │   │   └── date-picker-calendar.types.ts
+│   │   ├── constants/
+│   │   │   └── date-picker.const.ts
 │   │   ├── theme/
-│   │   │   ├── date-picker.css
-│   │   │   ├── date-picker-input.css
-│   │   │   └── date-picker-dark.css
-│   │   └── types/
-│   │       └── (type definitions)
+│   │   │   ├── date-picker-light.css
+│   │   │   ├── date-picker-dark.css
+│   │   │   ├── date-picker-input-light.css
+│   │   │   ├── date-picker-input-dark.css
+│   │   │   └── README.md
+│   │   └── ngx-datepicker-calendar.module.ts
 │   └── public-api.ts
 ├── README.md
 ├── CONTRIBUTING.md
 ├── package.json
 ├── tsconfig.json
 ├── tsconfig.lib.json
-└── ng-package.json
+├── tsconfig.lib.prod.json
+├── tsconfig.spec.json
+├── ng-package.json
+└── ...
 ```
 
 ### Key Files
 
-- **`src/lib/ngx-date-picker.component.ts`** - Main calendar component
-- **`src/lib/ngx-date-picker-input.component.ts`** - Calendar input wrapper component
-- **`src/lib/ngx-date-picker.service.ts`** - Shared service for date operations
-- **`src/lib/theme/`** - CSS theme files
+- **`src/lib/components/ngx-date-picker.component.ts`** - Date picker input wrapper component
+- **`src/lib/components/ngx-calendar.component.ts`** - Main calendar component
+- **`src/lib/services/ngx-datepicker-calendar.service.ts`** - Shared service for date operations
+- **`src/lib/types/date-picker-calendar.types.ts`** - TypeScript type definitions
+- **`src/lib/constants/date-picker.const.ts`** - Application constants
+- **`src/lib/theme/`** - CSS theme files (light and dark modes)
 - **`src/public-api.ts`** - Public API exports
+- **`ng-package.json`** - ng-packagr configuration for library packaging
+- **`tsconfig.lib.json`** - TypeScript configuration for development builds
+- **`tsconfig.lib.prod.json`** - TypeScript configuration for production builds
+- **`tsconfig.spec.json`** - TypeScript configuration for unit tests
 
 ---
 
@@ -231,8 +302,14 @@ Edit the relevant files in the `src/lib/` directory. Follow the coding standards
 Build the library to ensure there are no compilation errors:
 
 ```bash
-cd projects/ngx-date-picker
-npm run build
+# From ngx-workspace root
+ng build ngx-datepicker-calendar
+```
+
+Or for production build:
+
+```bash
+ng build ngx-datepicker-calendar --configuration production
 ```
 
 ### 4. Test Your Changes
@@ -240,7 +317,8 @@ npm run build
 Run tests to ensure your changes don't break existing functionality:
 
 ```bash
-npm run test
+# From ngx-workspace root
+ng test ngx-datepicker-calendar
 ```
 
 ### 5. Commit Your Changes
@@ -514,7 +592,7 @@ If you witness or experience unacceptable behavior, please report it to the main
 If you have any questions or need help, please:
 
 1. Check the [README.md](./README.md) for documentation
-2. Search existing [GitHub Issues](https://github.com/mumair4462/ngx-date-picker/issues)
+2. Search existing [GitHub Issues](https://github.com/mumair4462/ngx-datepicker-calendar/issues)
 3. Create a new issue with the `question` label
 4. Join our community discussions
 
@@ -522,8 +600,8 @@ If you have any questions or need help, please:
 
 ## License
 
-By contributing to ngx-date-picker, you agree that your contributions will be licensed under the MIT License.
+By contributing to ngx-datepicker-calendar, you agree that your contributions will be licensed under the MIT License.
 
 ---
 
-Thank you for contributing to ngx-date-picker! 🎉
+Thank you for contributing to ngx-datepicker-calendar!

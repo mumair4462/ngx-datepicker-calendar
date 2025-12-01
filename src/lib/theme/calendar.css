@@ -1,0 +1,761 @@
+/* ============================================================================
+   Light Theme - Date Picker Component
+   ============================================================================ */
+
+:root {
+  /* Colors */
+  --color-primary: #4a90e2;
+  --color-primary-light: #e3f2fd;
+  --color-text-primary: #333;
+  --color-text-secondary: #666;
+  --color-text-light: #999;
+  --color-text-muted: #bbb;
+  --color-text-disabled: #ccc;
+  --color-background: #ffffff;
+  --color-background-light: #f5f5f5;
+  --color-background-lighter: #fafafa;
+  --color-border: #e0e0e0;
+  --color-border-light: #ddd;
+  --color-shadow: rgba(0, 0, 0, 0.1);
+  --color-warning-bg: #fff3cd;
+  --color-warning-border: #ffc107;
+  --color-warning-text: #856404;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 20px;
+
+  /* Padding */
+  --padding-container: 16px;
+  --padding-nav-button: 8px 12px;
+  --padding-weekday: 8px 0;
+  --padding-action-button: 10px 16px;
+
+  /* Margins */
+  --margin-container-bottom: 20px;
+  --margin-header-bottom: 20px;
+  --margin-weekday-bottom: 8px;
+  --margin-grid-bottom: 16px;
+
+  /* Border radius */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+
+  /* Font sizes */
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+
+  /* Font weights */
+  --font-weight-normal: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Transitions */
+  --transition-default: all 0.2s ease;
+  --transition-none: none;
+
+  /* Hover and Active States */
+  --color-hover-light: #f0f0f0;
+  --color-hover-medium: #e8e8e8;
+  --color-active-medium: #e0e0e0;
+  --color-active-dark: #d8d8d8;
+  --color-primary-hover: #3a7bc8;
+  --color-primary-active: #2a5ba8;
+  --color-clear-active: #b3d9f2;
+
+  /* Header */
+  --nav-button-background: var(--color-background-light);
+  --nav-button-color: var(--color-text-primary);
+  --nav-button-border: 1px solid var(--color-border-light);
+  --nav-button-border-radius: var(--border-radius-sm);
+  --nav-button-hover-color: var(--color-text-primary);
+  --nav-button-hover-bg: var(--color-hover-medium);
+  --nav-button-hover-border-color: var(--color-text-light);
+  
+  --header-date-month-color: var(--color-text-primary);
+  --header-date-year-color: var(--color-text-primary);
+  --header-date-active-color: var(--color-primary);
+  --header-date-hover-opacity: 0.7;
+
+  /* Weekday Header */
+  --weekday-header-gap: var(--spacing-xs);
+  --weekday-header-spacing-bottom: var(--margin-weekday-bottom);
+  --weekday-name-font-size: var(--font-size-sm);
+  --weekday-name-font-weight: var(--font-weight-semibold);
+  --weekday-name-color: var(--color-text-secondary);
+  --weekday-padding: var(--padding-weekday);
+
+  /* Calendar Day - Current Month */
+  --calendar-day-current-month-color: var(--color-text-primary);
+  --calendar-day-current-month-background: var(--color-background);
+  --calendar-day-current-month-border: 1px solid var(--color-border);
+  --calendar-day-current-month-border-radius: var(--border-radius-sm);
+  --calendar-day-current-month-font-size: var(--font-size-base);
+  --calendar-day-current-month-font-weight: var(--font-weight-normal);
+  --calendar-day-current-month-hover-background: var(--color-hover-light);
+  --calendar-day-current-month-hover-border-color: var(--color-text-light);
+  --calendar-day-current-month-active-background: var(--color-active-medium);
+
+  /* Calendar Day - Other Month */
+  --calendar-day-other-month-color: var(--color-text-muted);
+  --calendar-day-other-month-background: var(--color-background-lighter);
+  --calendar-day-other-month-border: 1px solid var(--color-border);
+  --calendar-day-other-month-cursor: default;
+
+  /* Calendar Day - Today */
+  --calendar-day-today-border: 2px solid var(--color-primary);
+  --calendar-day-today-color: var(--color-primary);
+  --calendar-day-today-font-weight: var(--font-weight-bold);
+  --calendar-day-today-hover-border-color: var(--color-primary-hover);
+  --calendar-day-today-hover-color: var(--color-primary-hover);
+
+  /* Calendar Day - Selected */
+  --calendar-day-selected-background: var(--color-primary);
+  --calendar-day-selected-color: var(--color-background);
+  --calendar-day-selected-border: var(--color-primary);
+  --calendar-day-selected-hover-background: var(--color-primary-hover);
+  --calendar-day-selected-hover-border: var(--color-primary-hover);
+  --calendar-day-selected-hover-color: var(--color-background);
+
+  /* Calendar Day - In Range */
+  --calendar-day-in-range-background: var(--color-primary-light);
+  --calendar-day-in-range-border: var(--color-primary);
+  --calendar-day-in-range-color: var(--color-text-primary);
+
+  /* Calendar Day - Range Start/End */
+  --calendar-day-range-start-background: var(--color-primary);
+  --calendar-day-range-start-color: var(--color-background);
+  --calendar-day-range-start-border: var(--color-primary);
+  --calendar-day-range-end-background: var(--color-primary);
+  --calendar-day-range-end-color: var(--color-background);
+  --calendar-day-range-end-border: var(--color-primary);
+
+  /* Calendar Day - Disabled */
+  --calendar-day-disabled-background: var(--color-background-light);
+  --calendar-day-disabled-color: var(--color-text-disabled);
+  --calendar-day-disabled-border: var(--color-border);
+  --calendar-day-disabled-cursor: not-allowed;
+  --calendar-day-disabled-text-decoration: line-through;
+  --calendar-day-disabled-hover-background: var(--color-hover-light);
+  --calendar-day-disabled-hover-border-color: var(--color-text-light);
+
+  /* Calendar Day - Focus */
+  --calendar-day-focus-outline: 2px solid var(--color-primary);
+  --calendar-day-focus-outline-offset: -2px;
+
+  /* Action Buttons */
+  --action-button-background: var(--color-primary);
+  --action-button-color: var(--color-background);
+  --action-button-border: 1px solid var(--color-primary);
+  --action-button-border-radius: var(--border-radius-sm);
+  --action-button-padding: var(--padding-action-button);
+  --action-button-font-size: var(--font-size-base);
+  --action-button-font-weight: var(--font-weight-normal);
+  --action-button-hover-background: var(--color-primary-hover);
+  --action-button-hover-border: var(--color-primary-active);
+  --action-button-active-background: var(--color-primary-active);
+
+  /* Action Button - Clear */
+  --action-button-clear-background: var(--color-background-light);
+  --action-button-clear-border: 1px solid var(--color-border-light);
+  --action-button-clear-color: var(--color-text-primary);
+  --action-button-clear-hover-background: var(--color-hover-medium);
+  --action-button-clear-hover-border-color: var(--color-text-light);
+  --action-button-clear-active-background: var(--color-clear-active);
+
+  /* Selector Button */
+  --selector-button-background: var(--color-background-light);
+  --selector-button-border: 1px solid var(--color-border);
+  --selector-button-border-radius: var(--border-radius-sm);
+  --selector-button-color: var(--color-text-primary);
+  --selector-button-font-size: var(--font-size-sm);
+  --selector-button-font-weight: var(--font-weight-normal);
+  --selector-button-padding: var(--spacing-sm) var(--spacing-xs);
+  --selector-button-hover-background: var(--color-hover-light);
+  --selector-button-hover-border-color: var(--color-text-light);
+  --selector-button-active-background: var(--color-active-medium);
+  --selector-button-active-border-color: var(--color-text-light);
+  --selector-button-selected-background: var(--color-primary);
+  --selector-button-selected-color: var(--color-background);
+  --selector-button-selected-border: var(--color-primary);
+  --selector-button-selected-font-weight: var(--font-weight-semibold);
+  --selector-button-focus-outline: 2px solid var(--color-primary);
+  --selector-button-focus-outline-offset: -2px;
+}
+
+
+/* ============================================================================
+   Component Styles
+   ============================================================================ */
+
+.icon-span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar-host {
+  display: block;
+}
+
+.calendar-container {
+  max-width: 400px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  padding: var(--padding-container);
+  background-color: var(--color-background);
+  box-shadow: 0 2px 8px var(--color-shadow);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    sans-serif;
+}
+
+/* ============================================================================
+   Header
+   ============================================================================ */
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--margin-header-bottom);
+  gap: var(--spacing-md);
+}
+
+.calendar-header h2 {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  min-width: 150px;
+  text-align: center;
+}
+
+.month-year {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  align-items: center;
+}
+
+.month-button,
+.year-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  transition: var(--transition-default);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  text-align: center;
+}
+
+.month-button:hover,
+.year-button:hover {
+  opacity: var(--header-date-hover-opacity);
+}
+
+.month-button:focus-visible,
+.year-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--border-radius-sm);
+}
+
+.month-button {
+  justify-content: end;
+  color: var(--header-date-month-color);
+}
+
+.year-button {
+  justify-content: start;
+  font-weight: var(--font-weight-bold);
+  color: var(--header-date-year-color);
+}
+
+.active-date-button {
+  color: var(--header-date-active-color) !important;
+}
+
+.selector-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) 0;
+}
+
+.selector-grid-large {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-sm);
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.selector-grid-large::-webkit-scrollbar {
+  width: 6px;
+}
+
+.selector-grid-large::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.selector-grid-large::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+.selector-grid-large::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-light);
+}
+
+.selector-scroll-large {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.selector-scroll-large::-webkit-scrollbar {
+  width: 6px;
+}
+
+.selector-scroll-large::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.selector-scroll-large::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+.selector-scroll-large::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-light);
+}
+
+.selector-button-large {
+  padding: var(--selector-button-padding);
+  background-color: var(--selector-button-background);
+  border: var(--selector-button-border);
+  border-radius: var(--selector-button-border-radius);
+  cursor: pointer;
+  font-size: var(--selector-button-font-size);
+  font-weight: var(--selector-button-font-weight);
+  color: var(--selector-button-color);
+  transition: var(--transition-default);
+  text-align: center;
+}
+
+.selector-button-large:hover:not(.active) {
+  background-color: var(--selector-button-hover-background);
+  border-color: var(--selector-button-hover-border-color);
+}
+
+.selector-button-large:active:not(.active) {
+  background-color: var(--selector-button-active-background);
+}
+
+.selector-button-large.active {
+  background-color: var(--selector-button-selected-background);
+  color: var(--selector-button-selected-color);
+  border-color: var(--selector-button-selected-border);
+  font-weight: var(--selector-button-selected-font-weight);
+}
+
+.selector-button-large:focus-visible {
+  outline: var(--selector-button-focus-outline);
+  outline-offset: var(--selector-button-focus-outline-offset);
+}
+
+.selector-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.selector-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.selector-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-sm);
+}
+
+.selector-scroll {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.selector-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.selector-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.selector-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+.selector-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-light);
+}
+
+.selector-button {
+  padding: var(--selector-button-padding);
+  background-color: var(--selector-button-background);
+  border: var(--selector-button-border);
+  border-radius: var(--selector-button-border-radius);
+  cursor: pointer;
+  font-size: var(--selector-button-font-size);
+  font-weight: var(--selector-button-font-weight);
+  color: var(--selector-button-color);
+  transition: var(--transition-default);
+  text-align: center;
+}
+
+.selector-button:hover:not(.active) {
+  background-color: var(--selector-button-hover-background);
+  border-color: var(--selector-button-hover-border-color);
+}
+
+.selector-button:active:not(.active) {
+  background-color: var(--selector-button-active-background);
+}
+
+.selector-button.active {
+  background-color: var(--selector-button-selected-background);
+  color: var(--selector-button-selected-color);
+  border-color: var(--selector-button-selected-border);
+  font-weight: var(--selector-button-selected-font-weight);
+}
+
+.selector-button:focus-visible {
+  outline: var(--selector-button-focus-outline);
+  outline-offset: var(--selector-button-focus-outline-offset);
+}
+
+.nav-button {
+  padding: var(--padding-nav-button);
+  background-color: var(--nav-button-background);
+  border: var(--nav-button-border);
+  border-radius: var(--nav-button-border-radius);
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  color: var(--nav-button-color);
+  transition: var(--transition-default);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-button:hover:not(:disabled) {
+  background-color: var(--nav-button-hover-bg);
+  border-color: var(--nav-button-hover-border-color);
+  color: var(--nav-button-hover-color);
+}
+
+.nav-button:active:not(:disabled) {
+  background-color: var(--color-active-dark);
+}
+
+.nav-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.nav-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ============================================================================
+   Weekday Header
+   ============================================================================ */
+
+.weekday-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--weekday-header-gap);
+  margin-bottom: var(--weekday-header-spacing-bottom);
+}
+
+.weekday-name {
+  text-align: center;
+  font-size: var(--weekday-name-font-size);
+  font-weight: var(--weekday-name-font-weight);
+  color: var(--weekday-name-color);
+  padding: var(--weekday-padding);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ============================================================================
+   Calendar Grid
+   ============================================================================ */
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--spacing-xs);
+  margin-bottom: var(--margin-grid-bottom);
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  border: var(--calendar-day-current-month-border);
+  background-color: var(--calendar-day-current-month-background);
+  border-radius: var(--calendar-day-current-month-border-radius);
+  cursor: pointer;
+  font-size: var(--calendar-day-current-month-font-size);
+  font-weight: var(--calendar-day-current-month-font-weight);
+  color: var(--calendar-day-current-month-color);
+  transition: var(--transition-default);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  position: relative;
+}
+
+.calendar-day:not(.disabled):not(.selected):not(.range-start):not(.range-end):hover {
+  background-color: var(--calendar-day-current-month-hover-background);
+  border-color: var(--calendar-day-current-month-hover-border-color);
+}
+
+.calendar-day:not(.disabled):not(.selected):not(.range-start):not(.range-end):active {
+  background-color: var(--calendar-day-current-month-active-background);
+}
+
+.calendar-day:focus-visible {
+  outline: var(--calendar-day-focus-outline);
+  outline-offset: var(--calendar-day-focus-outline-offset);
+}
+
+.calendar-day.current-month {
+  color: var(--calendar-day-current-month-color);
+}
+
+.calendar-day:not(.current-month) {
+  color: var(--calendar-day-other-month-color);
+  background-color: var(--calendar-day-other-month-background);
+  cursor: var(--calendar-day-other-month-cursor);
+}
+
+.calendar-day.today {
+  border: var(--calendar-day-today-border);
+  font-weight: var(--calendar-day-today-font-weight);
+  color: var(--calendar-day-today-color);
+}
+
+.calendar-day.today:hover {
+  border-color: var(--calendar-day-today-hover-border-color) !important;
+  color: var(--calendar-day-today-hover-color) !important;
+}
+
+.calendar-day.today.selected {
+  background-color: var(--calendar-day-selected-background);
+  color: var(--calendar-day-selected-color);
+  border-color: var(--calendar-day-selected-border);
+}
+
+.calendar-day.today.selected:hover {
+  background-color: var(--calendar-day-selected-hover-background) !important;
+  border-color: var(--calendar-day-selected-hover-border) !important;
+  color: var(--calendar-day-selected-hover-color) !important;
+}
+
+.calendar-day.selected {
+  background-color: var(--calendar-day-selected-background);
+  color: var(--calendar-day-selected-color);
+  border-color: var(--calendar-day-selected-border);
+}
+
+.calendar-day.selected:hover {
+  background-color: var(--calendar-day-selected-hover-background) !important;
+  border-color: var(--calendar-day-selected-hover-border) !important;
+  color: var(--calendar-day-selected-hover-color) !important;
+}
+
+.calendar-day.in-range {
+  background-color: var(--calendar-day-in-range-background);
+  border-color: var(--calendar-day-in-range-border);
+  color: var(--calendar-day-in-range-color);
+}
+
+.calendar-day.range-start,
+.calendar-day.range-end {
+  background-color: var(--calendar-day-range-start-background);
+  color: var(--calendar-day-range-start-color);
+  border-color: var(--calendar-day-range-start-border);
+}
+
+.calendar-day.disabled {
+  background-color: var(--calendar-day-disabled-background);
+  color: var(--calendar-day-disabled-color);
+  cursor: var(--calendar-day-disabled-cursor);
+  border-color: var(--calendar-day-disabled-border);
+  text-decoration: var(--calendar-day-disabled-text-decoration);
+}
+
+.calendar-day.disabled:hover {
+  background-color: var(--calendar-day-disabled-hover-background);
+  border-color: var(--calendar-day-disabled-hover-border-color);
+}
+
+.calendar-day.hidden {
+  visibility: hidden;
+}
+
+.day-number {
+  display: block;
+}
+
+/* ============================================================================
+   Action Buttons
+   ============================================================================ */
+
+.calendar-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: space-between;
+}
+
+.action-button {
+  flex: 1;
+  padding: var(--action-button-padding);
+  background-color: var(--action-button-background);
+  border: var(--action-button-border);
+  border-radius: var(--action-button-border-radius);
+  cursor: pointer;
+  font-size: var(--action-button-font-size);
+  font-weight: var(--action-button-font-weight);
+  color: var(--action-button-color);
+  transition: var(--transition-default);
+  max-width: 50%;
+}
+
+.action-button:hover:not(:disabled) {
+  background-color: var(--action-button-hover-background);
+  border-color: var(--action-button-hover-border);
+}
+
+.action-button:active:not(:disabled) {
+  background-color: var(--action-button-active-background);
+}
+
+.action-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.action-button.clear {
+  background-color: var(--action-button-clear-background);
+  border: var(--action-button-clear-border);
+  color: var(--action-button-clear-color);
+}
+
+.action-button.clear:hover:not(:disabled) {
+  background-color: var(--action-button-clear-hover-background);
+  border-color: var(--action-button-clear-hover-border-color);
+}
+
+.action-button.clear:active:not(:disabled) {
+  background-color: var(--action-button-clear-active-background);
+}
+
+/* ============================================================================
+   Accessibility
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .calendar-day,
+  .nav-button,
+  .action-button {
+    transition: var(--transition-none);
+  }
+}
+
+/* ============================================================================
+   Responsive Design
+   ============================================================================ */
+
+@media (max-width: 480px) {
+  .calendar-container {
+    max-width: 100%;
+    padding: 12px;
+  }
+
+  .calendar-header {
+    margin-bottom: 16px;
+  }
+
+  .calendar-header h2 {
+    font-size: var(--font-size-md);
+  }
+
+  .month-button,
+  .year-button {
+    font-size: var(--font-size-md);
+  }
+
+  .nav-button {
+    padding: 6px 10px;
+    font-size: var(--font-size-sm);
+  }
+
+  .weekday-name {
+    font-size: var(--font-size-xs);
+    padding: 6px 0;
+  }
+
+  .calendar-day {
+    font-size: var(--font-size-sm);
+  }
+
+  .action-button {
+    padding: 8px 12px;
+    font-size: var(--font-size-sm);
+  }
+}
+
+/* ============================================================================
+   High Contrast Mode Support
+   ============================================================================ */
+
+@media (prefers-contrast: more) {
+  .calendar-day {
+    border-width: 2px;
+  }
+
+  .nav-button,
+  .action-button {
+    border-width: 2px;
+  }
+}
