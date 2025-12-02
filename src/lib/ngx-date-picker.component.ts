@@ -13,7 +13,7 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NgxCalendarComponent } from './ngx-calendar.component';
-import { IDateFormatOptions, DateFormatType, SelectionMode, ButtonIconInput, DisableWeekendsInput } from './types/date-picker-calendar.types';
+import { IDateFormatOptions, DateFormatType, SelectionMode, ButtonIconInput, DisableWeekendsInput, IDateRange } from './types/date-picker-calendar.types';
 import { NEXT_ICON, PREVIOUS_ICON } from './constants/date-picker.const';
 
 @Component({
@@ -36,7 +36,7 @@ export class NgxDatePickerComponent implements ControlValueAccessor {
   // Inputs
   selectionMode = input<SelectionMode>('single');
   placeholder = input('Select a date');
-  dateSeparator = input(' | ');
+  dateSeparator = input('|');
   disabled = input(false);
   disabledDates = input<Date[]>([]);
   minDate = input<Date | undefined>();
@@ -57,7 +57,7 @@ export class NgxDatePickerComponent implements ControlValueAccessor {
   // Pre-selected dates (for syncing with parent component)
   preSelectedDate = input<Date | undefined>();
   preSelectedDates = input<Date[]>([]);
-  preSelectedRange = input<{ start: Date; end: Date } | undefined>();
+  preSelectedRange = input<IDateRange | undefined>();
   
   // UI Inputs
   showTodayBtn = input<boolean>(true);
@@ -81,24 +81,24 @@ export class NgxDatePickerComponent implements ControlValueAccessor {
   // Outputs
   dateSelected = output<Date>();
   datesSelected = output<Date[]>();
-  dateRangeSelected = output<{ start: Date; end: Date }>();
+  dateRangeSelected = output<IDateRange>();
   onClearSelection = output<void>();
 
   // Internal signals
   selectedDate = signal<Date | undefined>(undefined);
   selectedDates = signal<Date[]>([]);
-  selectedRange = signal<{ start: Date; end: Date } | undefined>(undefined);
+  selectedRange = signal<IDateRange | undefined>(undefined);
   isOpen = signal(false);
 
   // ControlValueAccessor callbacks
-  private onChange: ((value: Date | Date[] | { start: Date; end: Date } | undefined) => void) | null = null;
+  private onChange: ((value: Date | Date[] | IDateRange | undefined) => void) | null = null;
   private onTouched: (() => void) | null = null;
 
   constructor() {
     // Sync form control value when internal state changes
     effect(() => {
       const mode = this.selectionMode();
-      let value: Date | Date[] | { start: Date; end: Date } | undefined;
+      let value: Date | Date[] | IDateRange | undefined;
 
       if (mode === 'single') {
         value = this.selectedDate();
@@ -123,7 +123,7 @@ export class NgxDatePickerComponent implements ControlValueAccessor {
       return date ? this.formatDate(date) : '';
     } else if (mode === 'multiple') {
       const dates = this.selectedDates();
-      return dates.length > 0 ? `${dates.map((date) => this.formatDate(date)).join(`${this.dateSeparator()}`)}` : '';
+      return dates.length > 0 ? `${dates.map((date) => this.formatDate(date)).join(` ${this.dateSeparator()} `)}` : '';
     } else if (mode === 'range') {
       const range = this.selectedRange();
       return range ? `${this.formatDate(range.start)} - ${this.formatDate(range.end)}` : '';
@@ -161,7 +161,7 @@ export class NgxDatePickerComponent implements ControlValueAccessor {
     this.markAsTouched();
   }
 
-  onDateRangeSelected(range: { start: Date; end: Date }): void {
+  onDateRangeSelected(range: IDateRange): void {
     this.selectedRange.set(range);
     this.dateRangeSelected.emit(range);
     this.markAsTouched();
@@ -222,7 +222,7 @@ export class NgxDatePickerComponent implements ControlValueAccessor {
   }
 
   // ControlValueAccessor implementation
-  writeValue(value: Date | Date[] | { start: Date; end: Date } | undefined): void {
+  writeValue(value: Date | Date[] | IDateRange | undefined): void {
     if (value === null || value === undefined) {
       this.clearSelection();
       return;
@@ -235,11 +235,11 @@ export class NgxDatePickerComponent implements ControlValueAccessor {
     } else if (mode === 'multiple' && Array.isArray(value)) {
       this.selectedDates.set(value);
     } else if (mode === 'range' && typeof value === 'object' && 'start' in value && 'end' in value) {
-      this.selectedRange.set(value as { start: Date; end: Date });
+      this.selectedRange.set(value as IDateRange);
     }
   }
 
-  registerOnChange(fn: (value: Date | Date[] | { start: Date; end: Date } | undefined) => void): void {
+  registerOnChange(fn: (value: Date | Date[] | IDateRange | undefined) => void): void {
     this.onChange = fn;
   }
 

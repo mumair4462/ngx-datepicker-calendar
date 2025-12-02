@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { ButtonIconInput, CalendarDay, DisableWeekendsInput, SelectionMode } from './types/date-picker-calendar.types';
+import { ButtonIconInput, ICalendarDay, DisableWeekendsInput, SelectionMode, IDateRange } from './types/date-picker-calendar.types';
 import { NEXT_ICON, PREVIOUS_ICON } from './constants/date-picker.const';
 import { NgxDatePickerCalendarService } from './ngx-datepicker-calendar.service';
 
@@ -38,7 +38,7 @@ export class NgxCalendarComponent implements ControlValueAccessor {
   private readonly sanitizer: DomSanitizer = inject(DomSanitizer);
 
   // ControlValueAccessor callbacks
-  private onChange: ((value: Date | Date[] | { start: Date; end: Date } | undefined) => void) | null = null;
+  private onChange: ((value: Date | Date[] | IDateRange | undefined) => void) | null = null;
   private onTouched: (() => void) | null = null;
 
   // Inputs
@@ -57,7 +57,7 @@ export class NgxCalendarComponent implements ControlValueAccessor {
   // Pre-selected dates (for syncing with parent component)
   preSelectedDate = input<Date | undefined>();
   preSelectedDates = input<Date[]>([]);
-  preSelectedRange = input<{ start: Date; end: Date } | undefined>();
+  preSelectedRange = input<IDateRange | undefined>();
 
   // UI Inputs
   showTodayBtn = input<boolean>(true);
@@ -80,7 +80,7 @@ export class NgxCalendarComponent implements ControlValueAccessor {
   // Outputs
   dateSelected = output<Date>();
   datesSelected = output<Date[]>();
-  dateRangeSelected = output<{ start: Date; end: Date }>();
+  dateRangeSelected = output<IDateRange>();
   clearSelection = output<void>();
 
   // Internal signals
@@ -201,7 +201,7 @@ export class NgxCalendarComponent implements ControlValueAccessor {
     // Sync form control value when internal state changes
     effect(() => {
       const mode = this.selectionMode();
-      let value: Date | Date[] | { start: Date; end: Date } | undefined;
+      let value: Date | Date[] | IDateRange | undefined;
 
       if (mode === 'single') {
         const dates = this.selectedDates();
@@ -334,7 +334,7 @@ export class NgxCalendarComponent implements ControlValueAccessor {
   /**
    * Handle day click
    */
-  onDayClick(day: CalendarDay): void {
+  onDayClick(day: ICalendarDay): void {
     if (day.isDisabled || !day.isCurrentMonth) {
       return;
     }
@@ -481,7 +481,7 @@ export class NgxCalendarComponent implements ControlValueAccessor {
   /**
    * Get CSS class for a day
    */
-  getDayClass(day: CalendarDay): string {
+  getDayClass(day: ICalendarDay): string {
     const classes: string[] = ['calendar-day'];
 
     if (!day.isCurrentMonth && !this.showOtherMonthDays()) {
@@ -525,12 +525,12 @@ export class NgxCalendarComponent implements ControlValueAccessor {
   /**
    * Check if a day should be hidden
    */
-  shouldHideDayNumber(day: CalendarDay): boolean {
+  shouldHideDayNumber(day: ICalendarDay): boolean {
     return !day.isCurrentMonth && !this.showOtherMonthDays();
   }
 
   // ControlValueAccessor implementation
-  writeValue(value: Date | Date[] | { start: Date; end: Date } | undefined): void {
+  writeValue(value: Date | Date[] | IDateRange | undefined): void {
     if (value === null || value === undefined) {
       this.selectedDates.set([]);
       this.rangeStart.set(undefined);
@@ -545,12 +545,12 @@ export class NgxCalendarComponent implements ControlValueAccessor {
     } else if (mode === 'multiple' && Array.isArray(value)) {
       this.selectedDates.set(value);
     } else if (mode === 'range' && typeof value === 'object' && 'start' in value && 'end' in value) {
-      this.rangeStart.set((value as { start: Date; end: Date }).start);
-      this.rangeEnd.set((value as { start: Date; end: Date }).end);
+      this.rangeStart.set((value as IDateRange).start);
+      this.rangeEnd.set((value as IDateRange).end);
     }
   }
 
-  registerOnChange(fn: (value: Date | Date[] | { start: Date; end: Date } | undefined) => void): void {
+  registerOnChange(fn: (value: Date | Date[] | IDateRange | undefined) => void): void {
     this.onChange = fn;
   }
 

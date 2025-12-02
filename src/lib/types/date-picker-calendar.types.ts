@@ -1,4 +1,7 @@
 export type DateFormatType = 'short' | 'medium' | 'long' | 'full' | 'custom';
+export type SelectionMode = 'single' | 'multiple' | 'range';
+export type DisableWeekendsInput = boolean | number | number[];
+export type ButtonIconInput = string | boolean;
 
 export interface IDateFormatOptions {
   year?: 'numeric' | '2-digit';
@@ -10,11 +13,7 @@ export interface IDateFormatOptions {
   second?: 'numeric' | '2-digit';
 }
 
-export type SelectionMode = 'single' | 'multiple' | 'range';
-export type DisableWeekendsInput = boolean | number | number[];
-export type ButtonIconInput = string | boolean;
-
-export interface CalendarDay {
+export interface ICalendarDay {
   date: Date;
   day: number;
   month: number;
@@ -26,8 +25,13 @@ export interface CalendarDay {
   isInRange: boolean;
 }
 
-export interface CalendarMonth {
+export interface ICalendarMonth {
   year: number;
   month: number;
-  days: CalendarDay[];
+  days: ICalendarDay[];
+}
+
+export interface IDateRange { 
+  start: Date; 
+  end: Date 
 }

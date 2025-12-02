@@ -1,7 +1,16 @@
 <div class="calendar-input-wrapper">
     <div class="input-group">
-        <input #inputElement type="text" class="calendar-input" [value]="displayValue()" (focus)="openPopover()"
-            [placeholder]="placeholder()" [disabled]="disabled()" readonly aria-label="Select date" />
+        <input 
+            id="date-picker-input"
+            #inputElement 
+            type="text" 
+            class="calendar-input" 
+            [value]="displayValue()" 
+            (focus)="openPopover()"
+            [placeholder]="placeholder()" 
+            [disabled]="disabled()" 
+            readonly 
+            aria-label="Select date" />
     </div>
 
     @if (isOpen()) {

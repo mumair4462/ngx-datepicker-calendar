@@ -13,7 +13,7 @@ A fully-featured, accessible, and performant date picker component library built
 5. [Setup & Configuration](#setup--configuration)
 6. [Styling & Theming](#styling--theming)
 7. [Calendar Component](#calendar-component)
-8. [Calendar Input Component](#calendar-input-component)
+8. [Date Picker Component](#date-picker-component)
 9. [Input Properties Reference](#input-properties-reference)
 10. [Output Events Reference](#output-events-reference)
 11. [CSS Variables & Styling](#css-variables--styling)
@@ -374,16 +374,16 @@ onDatesSelected(dates: Date[]): void {
 ```
 
 ```typescript
-onDateRangeSelected(range: { start: Date; end: Date }): void {
+onDateRangeSelected(range: IDateRange): void {
   console.log('Range:', range.start, 'to', range.end);
 }
 ```
 
 ---
 
-## Calendar Input Component
+## Date Picker Component
 
-A wrapper around the Calendar component that includes a text input field and popover. Perfect for form integration.
+A wrapper around the Date Picker component that includes a text input field and popover. Perfect for form integration.
 
 ### Basic Usage
 
@@ -493,9 +493,9 @@ export class FormComponent {
 | `nextMonthBtnIcon` | `string \| boolean` | SVG icon | Next month button icon (SVG string) |
 | `customWeekdayNames` | `string[] \| undefined` | `undefined` | Custom weekday names (must be exactly 7 strings) |
 
-### Calendar Input Component Inputs
+### Date Picker Component Inputs
 
-All Calendar inputs plus:
+All Date Picker inputs plus:
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
@@ -503,7 +503,7 @@ All Calendar inputs plus:
 | `dateSeparator` | `string` | `' \| '` | Separator for multiple dates display |
 | `disabled` | `boolean` | `false` | Disable the input field |
 | `dateFormat` | `'short' \| 'medium' \| 'long' \| 'full' \| 'custom'` | `'medium'` | Predefined date format type |
-| `customDateFormatOptions` | `DateFormatOptions \| undefined` | `undefined` | Custom date formatting options (overrides `dateFormat`) |
+| `customDateFormatOptions` | `IDateFormatOptions \| undefined` | `undefined` | Custom date formatting options (overrides `dateFormat`) |
 
 #### Date Format Types
 
@@ -513,10 +513,10 @@ All Calendar inputs plus:
 - **`full`**: `Monday, December 25, 2024` (includes weekday)
 - **`custom`**: Use `customDateFormatOptions` for full control
 
-#### DateFormatOptions Interface
+#### IDateFormatOptions Interface
 
 ```typescript
-interface DateFormatOptions {
+interface IDateFormatOptions {
   year?: 'numeric' | '2-digit';
   month?: 'numeric' | '2-digit' | 'short' | 'long' | 'narrow';
   day?: 'numeric' | '2-digit';
@@ -547,7 +547,7 @@ Emitted when dates are selected or deselected.
 
 #### Range Selection Mode
 ```typescript
-@Output() dateRangeSelected = output<{ start: Date; end: Date }>();
+@Output() dateRangeSelected = output<IDateRange>();
 ```
 Emitted when a date range is fully selected (both start and end dates chosen).
 
@@ -557,7 +557,7 @@ Emitted when a date range is fully selected (both start and end dates chosen).
 ```
 Emitted when the clear button is clicked.
 
-### Calendar Input Component Outputs
+### Date Picker Component Outputs
 
 Same as Calendar component (all events are passed through).
 
@@ -937,7 +937,7 @@ import { NgxDatePickerComponent } from 'ngx-datepicker-calendar';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RangePickerComponent {
-  dateRange = signal<{ start: Date; end: Date } | undefined>(undefined);
+  dateRange = signal<IDateRange | undefined>(undefined);
 
   dayCount = computed(() => {
     const range = this.dateRange();
@@ -946,7 +946,7 @@ export class RangePickerComponent {
     return Math.ceil(time / (1000 * 60 * 60 * 24)) + 1;
   });
 
-  onRangeSelected(range: { start: Date; end: Date }): void {
+  onRangeSelected(range: IDateRange): void {
     this.dateRange.set(range);
   }
 

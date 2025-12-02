@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CalendarDay } from '../public-api';
+import { ICalendarDay } from '../public-api';
 
 @Injectable({
   providedIn: 'root',
@@ -52,13 +52,13 @@ export class NgxDatePickerCalendarService {
     selectedDates: Date[] = [],
     rangeStart?: Date,
     rangeEnd?: Date
-  ): CalendarDay[] {
+  ): ICalendarDay[] {
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
     const startDate = new Date(firstDay);
     startDate.setDate(startDate.getDate() - firstDay.getDay());
 
-    const days: CalendarDay[] = [];
+    const days: ICalendarDay[] = [];
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
